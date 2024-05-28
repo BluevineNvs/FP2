@@ -1,5 +1,8 @@
 {
-    "java.proyect.sourcePaths": [
+    "java.project.sourcePaths": [
+        "Game_1",
         "Lab 06",
-    ]
+        "Lab 05",
+    ],
+    "java.project.referencedLibraries": []
 }
