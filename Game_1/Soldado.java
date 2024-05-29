@@ -7,6 +7,33 @@ class Soldado {
   private int speed;
   private String actt;
   private boolean live;
+  private int fila;
+  private int columna;
+  private int team;
+
+  public int getFila() {
+    return fila;
+  }
+
+  public void setFila(int fila) {
+    this.fila = fila;
+  }
+
+  public int getColumna() {
+    return columna;
+  }
+
+  public void setColumna(int columna) {
+    this.columna = columna;
+  }
+
+  public int getTeam() {
+    return team;
+  }
+
+  public void setTeam(int team) {
+    this.team = team;
+  }
 
   @Override
   public String toString() {
@@ -76,6 +103,15 @@ class Soldado {
 
   public void setLive(boolean live) {
     this.live = live;
+  }
+
+  public Soldado(int y){
+    this.team = y;
+    this.hp = 100;
+    this.actHP = 100;
+    this.speed = 1;
+    this.actt = "Neutral";
+    this.live = true;
   }
 
   public Soldado() {
