@@ -116,7 +116,7 @@ class Soldado {
     this.speed += 2;
   }
 
-  public void serAtacado(int atkLvl) {
+  public void defender(int atkLvl) {
     this.actt = "Defensive";
     this.speed = 0;
     if (this.defLvl < atkLvl) {
@@ -128,7 +128,9 @@ class Soldado {
     }
   }
 
-  public void counterAttack(Soldado b) {
+  public void morir() {
+    this.actHP=0;
+    this.live=false;
 
   }
 
@@ -137,7 +139,7 @@ class Soldado {
       if (b.getSpeed() > this.speed) {
         b.huir();
       } else {
-        b.serAtacado(this.atkLvl);
+        b.defender(this.atkLvl);
       }
     } else {
       this.actt = "Offensive";
@@ -151,7 +153,8 @@ class Soldado {
         } else {
           System.out.println("xD");
           b.setActt("Offensive");
-          this.serAtacado(b.getAtkLvl());
+          this.defender(b.getAtkLvl());
+          b.setSpeed(b.getSpeed()+1);
         }
       }
     }
