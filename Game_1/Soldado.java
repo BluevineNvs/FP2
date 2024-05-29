@@ -145,13 +145,13 @@ class Soldado {
       this.actt = "Offensive";
       this.speed += 1;
       if (b.getDefLvl() >= this.atkLvl) {
-        System.out.println("Contrataque causa");
+        System.out.println("Contrataque causa"); //Depuration msg
         if (this.defLvl >= b.getAtkLvl()) {
           this.actt = "Defensive";
           this.speed = 0;
           b.attack(this);
         } else {
-          System.out.println("xD");
+          System.out.println("xD"); //Depuration msg
           b.setActt("Offensive");
           this.defender(b.getAtkLvl());
           b.setSpeed(b.getSpeed()+1);
