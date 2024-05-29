@@ -120,7 +120,7 @@ class Soldado {
     this.actt = "Defensive";
     this.speed = 0;
     if (this.defLvl < atkLvl) {
-      this.actHP = (this.defLvl + this.hp) - atkLvl;
+      this.actHP = this.actHP - (atkLvl - this.defLvl);
       this.defLvl = 0;
       if (this.actHP <= 0) {
         this.live = false;
@@ -147,11 +147,11 @@ class Soldado {
         if (this.defLvl >= b.getAtkLvl()) {
           this.actt = "Defensive";
           this.speed = 0;
-          b.setActt("Offensive");
-          this.defLvl -= b.getAtkLvl();
+          b.attack(this);
         } else {
           System.out.println("xD");
-          b.attack(this);
+          b.setActt("Offensive");
+          this.serAtacado(b.getAtkLvl());
         }
       }
     }
