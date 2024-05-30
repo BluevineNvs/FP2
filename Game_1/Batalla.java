@@ -1,162 +1,219 @@
-public class Batalla {
-  public static void main(String[] args) {
-    Soldado[][] table = new Soldado[10][10];
-    fillTable(table);
-    printTable(table);
-    printMayorNivel(table);
-    System.out.println("___________________________________");
-    printPromedioPuntos(table);
-    System.out.println("___________________________________");
-    printPuntosAll(table);
-    System.out.println("___________________________________");
-    printSoladosOrdenados(table);
-    System.out.println("___________________________________");
-    printRankingPointsBubble(table);
-    System.out.println("___________________________________");
-    printRankingPointsSelect(table);
-  }
-  public static void fillTable(Soldado[][] t) {
-    int nSoldados = random(10) + 1;
-    for(int i = 0; i < nSoldados; i += 1) addSoldado(t, i);
-  }
-  public static void addSoldado(Soldado[][] t, int i) {
-    int x = random(10);
-    int y = random(10);
-    String name = "Soldado " + (i + 1);
-    if(!(t[x][y] == null)) addSoldado(t, i);
-    else {
-      Soldado soldado = new Soldado(y);
-      soldado.setColumna(x);
-      soldado.setFila(y);
-      soldado.setName(name);
-      soldado.setAtkLvl(random(150));
-      soldado.setDefLvl(random(150));
-      t[x][y] = soldado;
-    }
-  }
-  public static void printTable(Soldado[][] t) {
-    System.out.println("-----------------------------------------");
-    for(int i = 0; i < t.length; i += 1) {
-      System.out.print("|");
-      for(int j = 0; j < t.length; j += 1) {
-        Soldado soldado = t[i][j];
-        if(soldado == null) System.out.print("   |");
-        else System.out.print(" * |");
+import java.util.*;
+public class Batalla{
+  public static void main(String[] args){
+    System.out.println();
+    // Inicializar tablero
+    ArrayList<ArrayList<Soldado>> tablero = new ArrayList<>();
+    for(int i = 0; i < 10; i++){
+      ArrayList<Soldado> fila = new ArrayList<Soldado>();
+      for(int j = 0; j < 10; j++){
+        fila.add(null);
       }
+      tablero.add(fila);
+    }
+
+    int n = 10;
+    // Army 1
+    for(int i = 0; i < n; i++){
+      Soldado s = new Soldado();
+      s.setName("SoldadoEj1_" + i);
+      s.setHp((int) (Math.random() * (5 - 1 + 1) + 1));
+      int fila, col;
+      do{
+        fila = (int) (Math.random() * 10);
+        col = (int) (Math.random() * 10);
+      }while (tablero.get(fila).get(col) != null);
+      s.setFila(fila);
+      s.setColumna(col);
+      s.setTeam(1);
+      tablero.get(fila).set(col, s);
+    }
+
+    // Army 2
+    for(int i = 0; i < n; i++){
+      Soldado s = new Soldado();
+      s.setName("SoldadoEj2_" + i);
+      s.setHp((int) (Math.random() * (5 - 1 + 1) + 1));
+      int fila, col;
+      do{
+        fila = (int) (Math.random() * 10);
+        col = (int) (Math.random() * 10);
+      }while (tablero.get(fila).get(col) != null);
+      s.setFila(fila);
+      s.setColumna(col);
+      s.setTeam(2);
+      tablero.get(fila).set(col, s);
+    }
+    // Mostrar tablero
+    for(int i = 0; i < 10; i++){
+      for(int j = 0; j < 10; j++){
+        // Tablero
+        if(tablero.get(i).get(j) == null){
+          System.out.print("|_|");
+        }else{
+          System.out.print("|" + tablero.get(i).get(j).getTeam() + "|");
+        }
+      }
+
       System.out.println();
-      System.out.println("-----------------------------------------");
     }
-  }
-  public static void printArr(Soldado[] arr) {
-    for(Soldado n : arr) {
-      if(n != null)System.out.println(n + " | ");
-    }
-  }
-  public static int random(int n) {
-    return (int) (Math.random() * n);
-  }
-  public static void printMayorNivel(Soldado[][] t) {
-    int maxPoints = 0;
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] == null) continue;
-        if(maxPoints < t[i][j].getActHP()) maxPoints = t[i][j].getActHP();
-      }
-    }
-    System.out.println("Los soldados con el mayor nivel de puntos son:");
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] == null) continue;
-        if(maxPoints == t[i][j].getActHP()) System.out.println(t[i][j]);
-      }
-    }
-  }
-  public static void printPromedioPuntos(Soldado[][] t) {
-    double sum = 0;
-    int count = 0;
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] != null) {
-          sum += t[i][j].getActHP();
-          count += 1;
+    // Soldado con mayor vida de cada ejército
+    Soldado mayorVidaEj1 = null;
+    Soldado mayorVidaEj2 = null;
+    for(ArrayList<Soldado> fila : tablero){
+      for(Soldado s : fila){
+        if(s != null){
+          if(s.getName().startsWith("SoldadoEj1_") && (mayorVidaEj1 == null || s.getHp() > mayorVidaEj1.getHp())){
+            mayorVidaEj1 = s;
+          }
+          if(s.getName().startsWith("SoldadoEj2_") && (mayorVidaEj2 == null || s.getHp() > mayorVidaEj2.getHp())){
+            mayorVidaEj2 = s;
+          }
         }
       }
     }
-    System.out.println("El promedio es: " + (sum/count));
-  }
-  public static void printPuntosAll(Soldado[][] t) {
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] != null) {
-          System.out.println("Nivel de vida del " + t[i][j].getName() + " es: " + t[i][j].getActHP());
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldado con mayor vida Ejército 1:");
+    System.out.println(mayorVidaEj1);
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldado con mayor vida Ejército 2:");
+    System.out.println(mayorVidaEj2);
+
+    // Promedio vida de cada ejército
+    int countEj1 = 0, countEj2 = 0;
+    int sumaEj1 = 0, sumaEj2 = 0;
+
+    for(ArrayList<Soldado> fila : tablero){
+      for(Soldado s : fila){
+        if(s != null){
+          if(s.getName().startsWith("SoldadoEj1_")){
+            sumaEj1 += s.getHp();
+            countEj1++;
+          }else{
+            sumaEj2 += s.getHp();
+            countEj2++;
+          }
         }
       }
     }
-  }
-  public static void printSoladosOrdenados(Soldado[][] t) {
-    int count = 0;
-    Soldado[] newArr = new Soldado[10];
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] != null) {
-          newArr[count] = t[i][j];
-          count += 1;
+
+    double promEj1 = (double) sumaEj1 / countEj1;
+    double promEj2 = (double) sumaEj2 / countEj2;
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Promedio vida Ejército 1: " + promEj1);
+    System.out.println("Promedio vida Ejército 2: " + promEj2);
+
+    // Soldados por orden de creación
+    ArrayList<Soldado> soldadosEj1 = new ArrayList<>();
+    ArrayList<Soldado> soldadosEj2 = new ArrayList<>();
+
+    for(ArrayList<Soldado> fila : tablero){
+      for(Soldado s : fila){
+        if(s != null){
+          if(s.getName().startsWith("SoldadoEj1_")){
+            soldadosEj1.add(s);
+          }else{
+            soldadosEj2.add(s);
+          }
         }
       }
     }
-    for(int i = 0; i < count - 1 ; i += 1) {
-      for(int j = 0; j < count - 1 - i; j += 1) {
-        if(newArr[j].getName().charAt(8) > newArr[j + 1].getName().charAt(8)) {
-          Soldado s = newArr[j];
-          newArr[j] = newArr[j + 1];
-          newArr[j + 1] = s;
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldados Ejército 1:");
+    for(Soldado s : soldadosEj1){
+      System.out.println(s);
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldados Ejército 2:");
+    for(Soldado s : soldadosEj2){
+      System.out.println(s);
+    }
+
+    // Ranking de poder 
+    ArrayList<Soldado> soldadosEj1Sorted = new ArrayList<>(soldadosEj1);
+    ArrayList<Soldado> soldadosEj2Sorted = new ArrayList<>(soldadosEj2);
+
+    // Ordenamiento por selección
+    for(int i = 0; i < soldadosEj1Sorted.size(); i++){
+      int maxIndex = i;
+      for(int j = i + 1; j < soldadosEj1Sorted.size(); j++){
+        if(soldadosEj1Sorted.get(j).getHp() > soldadosEj1Sorted.get(maxIndex).getHp()){
+          maxIndex = j;
         }
       }
+      Soldado temp = soldadosEj1Sorted.get(maxIndex);
+      soldadosEj1Sorted.set(maxIndex, soldadosEj1Sorted.get(i));
+      soldadosEj1Sorted.set(i, temp);
     }
-    printArr(newArr);
-  }
-  public static void printRankingPointsBubble(Soldado[][] t) {
-    int count = 0;
-    Soldado[] newArr = new Soldado[10];
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] != null) {
-          newArr[count] = t[i][j];
-          count += 1;
+
+    for(int i = 0; i < soldadosEj2Sorted.size(); i++){
+      int maxIndex = i;
+      for(int j = i + 1; j < soldadosEj2Sorted.size(); j++){
+        if (soldadosEj2Sorted.get(j).getHp() > soldadosEj2Sorted.get(maxIndex).getHp()){
+          maxIndex = j;
         }
       }
+      Soldado temp = soldadosEj2Sorted.get(maxIndex);
+      soldadosEj2Sorted.set(maxIndex, soldadosEj2Sorted.get(i));
+      soldadosEj2Sorted.set(i, temp);
     }
-    for(int i = 0; i < count - 1; i += 1) {
-      for(int j = 0; j < count - 1 - i; j += 1) {
-        if(newArr[j].getActHP() < newArr[j + 1].getActHP()) {
-          Soldado s = newArr[j];
-          newArr[j] = newArr[j + 1];
-          newArr[j + 1] = s;
-        }
-      }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Ranking Ejército 1:");
+    for(Soldado s : soldadosEj1Sorted){
+      System.out.println(s);
     }
-    printArr(newArr);
-  }
-  public static void printRankingPointsSelect(Soldado[][] t) {
-    int count = 0;
-    Soldado[] newArr = new Soldado[10];
-    for(int i = 0; i < t.length; i += 1) {
-      for(int j = 0; j < t[i].length; j += 1) {
-        if(t[i][j] != null) {
-          newArr[count] = t[i][j];
-          count += 1;
-        }
-      }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Ranking Ejército 2:");
+    for(Soldado s : soldadosEj2Sorted){
+      System.out.println(s);
     }
-    for(int i = 0; i < count - 1; i += 1) {
-      int min = i;
-      for(int j = i; j < count; j += 1) {
-        min = newArr[min].getActHP() < newArr[j].getActHP() ? j : min;
-      }
-      Soldado soldado = newArr[i];
-      newArr[i] = newArr[min];
-      newArr[min] = soldado;
+
+    // Select winner
+    int sumaVidaEj1 = 0;
+    for (Soldado s : soldadosEj1Sorted){
+      sumaVidaEj1 += s.getHp();
     }
-    printArr(newArr);
+
+    int sumaVidaEj2 = 0;
+    for (Soldado s : soldadosEj2Sorted){
+      sumaVidaEj2 += s.getHp();
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("-----------------------------");
+    System.out.println();
+    System.out.println("EN BASE A LOS PUNTOS DE VIDA:");
+    System.out.println();
+    if(sumaVidaEj1 > sumaVidaEj2){
+      System.out.println("Gana el Ejército 1");
+    }else if (sumaVidaEj2 > sumaVidaEj1){
+      System.out.println("Gana el Ejército 2");
+    }else{
+      System.out.println("Empate");
+    }
+    System.out.println();
+    System.out.println("-----------------------------");
   }
 }
