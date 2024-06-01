@@ -1,72 +1,62 @@
 import java.util.*;
-public class Batalla{
-  public static void main(String[] args){
+
+public class Batalla {
+  public static void main(String[] args) {
     System.out.println();
     // Inicializar tablero
-    ArrayList<ArrayList<Soldado>> tablero = new ArrayList<>();
-    for(int i = 0; i < 10; i++){
-      ArrayList<Soldado> fila = new ArrayList<Soldado>();
-      for(int j = 0; j < 10; j++){
-        fila.add(null);
-      }
-      tablero.add(fila);
-    }
+    Soldado[][] tablero = new Soldado[10][10];
+    List<Soldado> todosLosSoldados = new ArrayList<>();
 
     int n = 10;
     // Army 1
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
       Soldado s = new Soldado();
       s.setName("SoldadoEj1_" + i);
       s.setHp((int) (Math.random() * (5 - 1 + 1) + 1));
+      s.setActHP((int) (Math.random() * (5 - 1 + 1) + 1));
       int fila, col;
-      do{
+      do {
         fila = (int) (Math.random() * 10);
         col = (int) (Math.random() * 10);
-      }while (tablero.get(fila).get(col) != null);
+      } while (tablero[fila][col] != null);
       s.setFila(fila);
       s.setColumna(col);
       s.setTeam(1);
-      tablero.get(fila).set(col, s);
+      tablero[fila][col] = s;
+      todosLosSoldados.add(s);
     }
 
     // Army 2
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
       Soldado s = new Soldado();
       s.setName("SoldadoEj2_" + i);
       s.setHp((int) (Math.random() * (5 - 1 + 1) + 1));
+      s.setActHP((int) (Math.random() * (5 - 1 + 1) + 1));
       int fila, col;
-      do{
+      do {
         fila = (int) (Math.random() * 10);
         col = (int) (Math.random() * 10);
-      }while (tablero.get(fila).get(col) != null);
+      } while (tablero[fila][col] != null);
       s.setFila(fila);
       s.setColumna(col);
       s.setTeam(2);
-      tablero.get(fila).set(col, s);
+      tablero[fila][col] = s;
+      todosLosSoldados.add(s);
     }
-    // Mostrar tablero
-    for(int i = 0; i < 10; i++){
-      for(int j = 0; j < 10; j++){
-        // Tablero
-        if(tablero.get(i).get(j) == null){
-          System.out.print("|_|");
-        }else{
-          System.out.print("|" + tablero.get(i).get(j).getTeam() + "|");
-        }
-      }
 
-      System.out.println();
-    }
+    // Mostrar tablero
+    Methods.mostrarTablero(tablero);
     // Soldado con mayor vida de cada ejército
     Soldado mayorVidaEj1 = null;
     Soldado mayorVidaEj2 = null;
-    for(ArrayList<Soldado> fila : tablero){
-      for(Soldado s : fila){
-        if(s != null){
-          if(s.getName().startsWith("SoldadoEj1_") && (mayorVidaEj1 == null || s.getHp() > mayorVidaEj1.getHp())){
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        Soldado s = tablero[i][j];
+        if (s != null) {
+          if (s.getName().startsWith("SoldadoEj1_") && (mayorVidaEj1 == null || s.getHp() > mayorVidaEj1.getHp())) {
             mayorVidaEj1 = s;
           }
-          if(s.getName().startsWith("SoldadoEj2_") && (mayorVidaEj2 == null || s.getHp() > mayorVidaEj2.getHp())){
+          if (s.getName().startsWith("SoldadoEj2_") && (mayorVidaEj2 == null || s.getHp() > mayorVidaEj2.getHp())) {
             mayorVidaEj2 = s;
           }
         }
@@ -88,13 +78,14 @@ public class Batalla{
     int countEj1 = 0, countEj2 = 0;
     int sumaEj1 = 0, sumaEj2 = 0;
 
-    for(ArrayList<Soldado> fila : tablero){
-      for(Soldado s : fila){
-        if(s != null){
-          if(s.getName().startsWith("SoldadoEj1_")){
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        Soldado s = tablero[i][j];
+        if (s != null) {
+          if (s.getName().startsWith("SoldadoEj1_")) {
             sumaEj1 += s.getHp();
             countEj1++;
-          }else{
+          } else {
             sumaEj2 += s.getHp();
             countEj2++;
           }
@@ -115,12 +106,13 @@ public class Batalla{
     ArrayList<Soldado> soldadosEj1 = new ArrayList<>();
     ArrayList<Soldado> soldadosEj2 = new ArrayList<>();
 
-    for(ArrayList<Soldado> fila : tablero){
-      for(Soldado s : fila){
-        if(s != null){
-          if(s.getName().startsWith("SoldadoEj1_")){
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        Soldado s = tablero[i][j];
+        if (s != null) {
+          if (s.getName().startsWith("SoldadoEj1_")) {
             soldadosEj1.add(s);
-          }else{
+          } else {
             soldadosEj2.add(s);
           }
         }
@@ -131,7 +123,7 @@ public class Batalla{
     System.out.println("--------------------------------------------------------");
     System.out.println();
     System.out.println("Soldados Ejército 1:");
-    for(Soldado s : soldadosEj1){
+    for (Soldado s : soldadosEj1) {
       System.out.println(s);
     }
 
@@ -139,19 +131,19 @@ public class Batalla{
     System.out.println("--------------------------------------------------------");
     System.out.println();
     System.out.println("Soldados Ejército 2:");
-    for(Soldado s : soldadosEj2){
+    for (Soldado s : soldadosEj2) {
       System.out.println(s);
     }
 
-    // Ranking de poder 
+    // Ranking de poder
     ArrayList<Soldado> soldadosEj1Sorted = new ArrayList<>(soldadosEj1);
     ArrayList<Soldado> soldadosEj2Sorted = new ArrayList<>(soldadosEj2);
 
     // Ordenamiento por selección
-    for(int i = 0; i < soldadosEj1Sorted.size(); i++){
+    for (int i = 0; i < soldadosEj1Sorted.size(); i++) {
       int maxIndex = i;
-      for(int j = i + 1; j < soldadosEj1Sorted.size(); j++){
-        if(soldadosEj1Sorted.get(j).getHp() > soldadosEj1Sorted.get(maxIndex).getHp()){
+      for (int j = i + 1; j < soldadosEj1Sorted.size(); j++) {
+        if (soldadosEj1Sorted.get(j).getHp() > soldadosEj1Sorted.get(maxIndex).getHp()) {
           maxIndex = j;
         }
       }
@@ -160,10 +152,10 @@ public class Batalla{
       soldadosEj1Sorted.set(i, temp);
     }
 
-    for(int i = 0; i < soldadosEj2Sorted.size(); i++){
+    for (int i = 0; i < soldadosEj2Sorted.size(); i++) {
       int maxIndex = i;
-      for(int j = i + 1; j < soldadosEj2Sorted.size(); j++){
-        if (soldadosEj2Sorted.get(j).getHp() > soldadosEj2Sorted.get(maxIndex).getHp()){
+      for (int j = i + 1; j < soldadosEj2Sorted.size(); j++) {
+        if (soldadosEj2Sorted.get(j).getHp() > soldadosEj2Sorted.get(maxIndex).getHp()) {
           maxIndex = j;
         }
       }
@@ -176,7 +168,7 @@ public class Batalla{
     System.out.println("--------------------------------------------------------");
     System.out.println();
     System.out.println("Ranking Ejército 1:");
-    for(Soldado s : soldadosEj1Sorted){
+    for (Soldado s : soldadosEj1Sorted) {
       System.out.println(s);
     }
 
@@ -184,18 +176,18 @@ public class Batalla{
     System.out.println("--------------------------------------------------------");
     System.out.println();
     System.out.println("Ranking Ejército 2:");
-    for(Soldado s : soldadosEj2Sorted){
+    for (Soldado s : soldadosEj2Sorted) {
       System.out.println(s);
     }
 
     // Select winner
     int sumaVidaEj1 = 0;
-    for (Soldado s : soldadosEj1Sorted){
+    for (Soldado s : soldadosEj1Sorted) {
       sumaVidaEj1 += s.getHp();
     }
 
     int sumaVidaEj2 = 0;
-    for (Soldado s : soldadosEj2Sorted){
+    for (Soldado s : soldadosEj2Sorted) {
       sumaVidaEj2 += s.getHp();
     }
 
@@ -206,14 +198,116 @@ public class Batalla{
     System.out.println();
     System.out.println("EN BASE A LOS PUNTOS DE VIDA:");
     System.out.println();
-    if(sumaVidaEj1 > sumaVidaEj2){
+    if (sumaVidaEj1 > sumaVidaEj2) {
       System.out.println("Gana el Ejército 1");
-    }else if (sumaVidaEj2 > sumaVidaEj1){
+    } else if (sumaVidaEj2 > sumaVidaEj1) {
       System.out.println("Gana el Ejército 2");
-    }else{
+    } else {
       System.out.println("Empate");
     }
     System.out.println();
-    System.out.println("-----------------------------");
+    System.out.println("----------------------------------------------------");
+
+    System.out.println("¡Bienvenidos al Juego de Batallas de Soldados PVP!");
+    System.out.println();
+    System.out.println("Reglas del Juego:");
+    System.out.println("1. PvP (Jugador contra Jugador): Dos ejércitos se enfrentan en un tablero de 10x10.");
+    System.out.println("2. Objetivo: El ejército que quede con soldados en el campo gana.");
+    System.out.println("3. Movimiento: Selecciona un soldado y una nueva posición.");
+    System.out.println("4. Combate: Si la nueva posición tiene un enemigo, se combate.");
+    System.out.println("   - Winrate (porcentaje de victoria) se calcula como:");
+    System.out.println(
+        "     winRate = (vidaSoldado + atkSoldado) / (vidaSoldado + atkSoldado + vidaOtroSoldado + atkOtroSoldado) * 100");
+    System.out.println("   - El soldado con mayor winrate gana el combate.");
+    System.out.println("   - El ganador se mueve y gana 1 punto de vida.");
+    System.out.println("   - El perdedor es eliminado.");
+    System.out.println();
+    System.out.println("¡Buena Suerte! ¡Que comience el juego!");
+    System.out.println();
+
+    Scanner sc = new Scanner(System.in);
+    boolean gameOver = false;
+    int batallas = 0;
+    Soldado soldadoConMasBajas = null;
+    Map<Soldado, Integer> bajasPorSoldado = new HashMap<>();
+
+    while (!gameOver) {
+      Methods.mostrarTablero(tablero);
+      int x, y, x1, y1;
+
+      while (true) {
+        System.out.println("Ingrese las coordenadas del soldado a seleccionar (x, y):");
+        System.out.print("x: ");
+        x = sc.nextInt();
+        System.out.print("y: ");
+        y = sc.nextInt();
+
+        System.out.println("Ingrese las nuevas coordenadas (x1, y1):");
+        System.out.print("x1: ");
+        x1 = sc.nextInt();
+        System.out.print("y1: ");
+        y1 = sc.nextInt();
+        System.out.println("Siguiente turno...");
+
+        if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10) {
+          if (tablero[x][y] != null) {
+            break;
+          } else {
+            System.out.println("No hay un soldado en la posición inicial. Intente de nuevo.");
+            Methods.mostrarTablero(tablero);
+          }
+        } else {
+          System.out.println("Coordenadas fuera de rango. Intente de nuevo.");
+          Methods.mostrarTablero(tablero);
+        }
+      }
+
+      Soldado atacante = tablero[x][y];
+      Soldado defensor = tablero[x1][y1];
+
+      if (defensor != null) {
+        batallas++;
+        double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
+        double winRateDefensor = 100 - winRateAtacante;
+        if (winRateAtacante > winRateDefensor) {
+          tablero[x1][y1] = atacante;
+          tablero[x][y] = null;
+          atacante.setFila(x1);
+          atacante.setColumna(y1);
+          atacante.setActHP(atacante.getHp() + 1);
+          bajasPorSoldado.put(atacante, bajasPorSoldado.getOrDefault(atacante, 0) + 1);
+          if (soldadoConMasBajas == null || bajasPorSoldado.get(atacante) > bajasPorSoldado.get(soldadoConMasBajas)) {
+            soldadoConMasBajas = atacante;
+          }
+        } else {
+          tablero[x][y] = null;
+          bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
+          if (soldadoConMasBajas == null || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
+            soldadoConMasBajas = defensor;
+          }
+        }
+      } else {
+        tablero[x1][y1] = atacante;
+        tablero[x][y] = null;
+        atacante.setFila(x1);
+        atacante.setColumna(y1);
+      }
+
+      // Verificar si el juego ha terminado
+      int sumaVid1 = Methods.calcularSumaVidaEquipo(tablero, 1);
+      int sumaVid2 = Methods.calcularSumaVidaEquipo(tablero, 2);
+      if (sumaVid1 == 0) {
+        Methods.mostrarTablero(tablero);
+        System.out.println("El Ejercito 2 gana la batalla");
+        gameOver = true;
+        Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 2, batallas, soldadoConMasBajas, bajasPorSoldado);
+      } else if (sumaVid2 == 0) {
+        Methods.mostrarTablero(tablero);
+        System.out.println("El Ejercito 1 gana la batalla");
+        gameOver = true;
+        Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 1, batallas, soldadoConMasBajas, bajasPorSoldado);
+      }
+    }
+    sc.close();
   }
 }
