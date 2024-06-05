@@ -105,7 +105,17 @@ class Soldado {
     this.live = live;
   }
 
-  public Soldado(int y){
+  // Method Call Chaining
+  public Soldado sumar(Soldado otro) {
+    Soldado result = new Soldado();
+    result.setAtkLvl(this.atkLvl + otro.atkLvl);
+    result.setDefLvl(this.defLvl + otro.defLvl);
+    result.setHp(this.hp + otro.hp);
+    result.setActHP(this.actHP + otro.actHP);
+    return result;
+  }
+
+  public Soldado(int y) {
     this.team = y;
     this.hp = 100;
     this.actHP = 100;
@@ -136,6 +146,18 @@ class Soldado {
     this.live = true;
   }
 
+
+  public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, int team) {
+    this.name = name;
+    this.atkLvl = atkLvl;
+    this.defLvl = defLvl;
+    this.hp = 100;
+    this.actHP = hp;
+    this.speed = speed;
+    this.team = team;
+  }
+
+
   public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, String actt, boolean live) {
     this.name = name;
     this.atkLvl = atkLvl;
@@ -165,8 +187,8 @@ class Soldado {
   }
 
   public void morir() {
-    this.actHP=0;
-    this.live=false;
+    this.actHP = 0;
+    this.live = false;
 
   }
 
@@ -181,16 +203,16 @@ class Soldado {
       this.actt = "Offensive";
       this.speed += 1;
       if (b.getDefLvl() >= this.atkLvl) {
-        System.out.println("Contrataque causa"); //Depuration msg
+        System.out.println("Contrataque causa"); // Depuration msg
         if (this.defLvl >= b.getAtkLvl()) {
           this.actt = "Defensive";
           this.speed = 0;
           b.attack(this);
         } else {
-          System.out.println("xD"); //Depuration msg
+          System.out.println("xD"); // Depuration msg
           b.setActt("Offensive");
           this.defender(b.getAtkLvl());
-          b.setSpeed(b.getSpeed()+1);
+          b.setSpeed(b.getSpeed() + 1);
         }
       }
     }

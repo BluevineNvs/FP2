@@ -1,13 +1,12 @@
 import java.util.*;
-
 public class Batalla {
-  public static void main(String[] args) {
+  public Batalla() {
     System.out.println();
     // Inicializar tablero
     Soldado[][] tablero = new Soldado[10][10];
     List<Soldado> todosLosSoldados = new ArrayList<>();
 
-    int n = 10;
+    int n = 2;
     // Army 1
     for (int i = 0; i < n; i++) {
       Soldado s = new Soldado();
@@ -215,12 +214,8 @@ public class Batalla {
     System.out.println("2. Objetivo: El ejército que quede con soldados en el campo gana.");
     System.out.println("3. Movimiento: Selecciona un soldado y una nueva posición.");
     System.out.println("4. Combate: Si la nueva posición tiene un enemigo, se combate.");
-    System.out.println("   - Winrate (porcentaje de victoria) se calcula como:");
-    System.out.println(
-        "     winRate = (vidaSoldado + atkSoldado) / (vidaSoldado + atkSoldado + vidaOtroSoldado + atkOtroSoldado) * 100");
-    System.out.println("   - El soldado con mayor winrate gana el combate.");
-    System.out.println("   - El ganador se mueve y gana 1 punto de vida.");
-    System.out.println("   - El perdedor es eliminado.");
+    System.out.println();
+    System.out.println("En caso querer poner pausa, ingresa pause en cualquier momento :)");
     System.out.println();
     System.out.println("¡Buena Suerte! ¡Que comience el juego!");
     System.out.println();
@@ -234,19 +229,43 @@ public class Batalla {
     while (!gameOver) {
       Methods.mostrarTablero(tablero);
       int x, y, x1, y1;
-
       while (true) {
         System.out.println("Ingrese las coordenadas del soldado a seleccionar (x, y):");
-        System.out.print("x: ");
-        x = sc.nextInt();
-        System.out.print("y: ");
-        y = sc.nextInt();
+        System.out.print("x, y: ");
+        String coordenadas = sc.nextLine();
+        String[] partes = coordenadas.split(",");
+
+        if (coordenadas.equalsIgnoreCase("pause")) {
+          pauseMenu(tablero);
+          continue;
+        }
+
+        if (partes.length != 2) {
+          System.out.println("Entrada inválida. Intente de nuevo.");
+          continue;
+        }
+
+        x = Integer.parseInt(partes[0]);
+        y = Integer.parseInt(partes[1]);
 
         System.out.println("Ingrese las nuevas coordenadas (x1, y1):");
-        System.out.print("x1: ");
-        x1 = sc.nextInt();
-        System.out.print("y1: ");
-        y1 = sc.nextInt();
+        System.out.print("x1, y1: ");
+        String nuevasCoordenadas = sc.nextLine();
+        partes = nuevasCoordenadas.split(",");
+
+        if (nuevasCoordenadas.equalsIgnoreCase("pause")) {
+          pauseMenu(tablero);
+          continue;
+        }
+
+        if (partes.length != 2) {
+          System.out.println("Entrada inválida. Intente de nuevo.");
+          continue;
+        }
+
+        x1 = Integer.parseInt(partes[0]);
+        y1 = Integer.parseInt(partes[1]);
+
         System.out.println("Siguiente turno...");
 
         if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10) {
@@ -308,6 +327,55 @@ public class Batalla {
         Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 1, batallas, soldadoConMasBajas, bajasPorSoldado);
       }
     }
+    System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
+    endMenu();
     sc.close();
+  }
+
+  public void pauseMenu(Soldado[][] tablero) {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("PAUSE MENU: ");
+    System.out.println("1. Nuevo Juego");
+    System.out.println("2. Menu Principal");
+    System.out.println("3. Continuar Juego");
+    System.out.println();
+    System.out.println("Selecciona tu opción");
+    int z = sc.nextInt();
+    switch (z) {
+      case 1:
+        Batalla b = new Batalla();
+        break;
+      case 2:
+        Game game = new Game();
+        break;
+      case 3:
+        System.out.println("Continuando Juego...");
+        Methods.mostrarTablero(tablero);
+        break;
+      default:
+        System.out.println("Opción inválida");
+        break;
+    }
+  }
+
+  public void endMenu() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("MENU: ");
+    System.out.println("1. Jugar de Nuevo");
+    System.out.println("2. Menu Principal");
+    System.out.println();
+    System.out.println("Selecciona tu opción");
+    int z = sc.nextInt();
+    switch (z) {
+      case 1:
+        Batalla b = new Batalla();
+        break;
+      case 2:
+        Game game = new Game();
+        break;
+      default:
+        System.out.println("Opción inválida");
+        break;
+    }
   }
 }
