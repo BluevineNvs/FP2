@@ -32,7 +32,8 @@ class Game {
         System.out.println("¡Juego Personalizado!");
         System.out.println("¿Buscan un desafío más estratégico?");
         System.out.println("En este modo, podrán personalizar sus ejércitos, ajustando cada detalle para perfeccionar sus estrategias y alcanzar la victoria");
-        CustomBattle batalla2 = new CustomBattle();
+        CustomBattle cb = new CustomBattle();
+        cb.CustomBattleT();
         break;
       case 3:
         System.out.println("¡Hasta la próxima, comandantes!");

@@ -157,6 +157,17 @@ class Soldado {
     this.team = team;
   }
 
+    public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, int team, int fila, int columna) {
+    this.name = name;
+    this.atkLvl = atkLvl;
+    this.defLvl = defLvl;
+    this.hp = 100;
+    this.actHP = hp;
+    this.speed = speed;
+    this.team = team;
+    this.fila = fila;
+    this.columna = columna;
+  }
 
   public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, String actt, boolean live) {
     this.name = name;
