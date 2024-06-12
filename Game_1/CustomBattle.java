@@ -69,7 +69,9 @@ public class CustomBattle {
       System.out.println("Selecciona el ejército a gestionar:");
       System.out.println("1. Ejército 1");
       System.out.println("2. Ejército 2");
-      System.out.println("3. Volver");
+      System.out.println("3. Ver Tablero");
+      System.out.println("4. Jugar");
+      System.out.println("5. Volver");
       int opcion = sc.nextInt();
       sc.nextLine(); // Clear the buffer
       List<Soldado> ejercito = null;
@@ -82,7 +84,14 @@ public class CustomBattle {
           ejercito = soldadosTeam2;
           break;
         case 3:
-          salir = true;
+          Methods.mostrarTablero(tablero);
+          gestionarEjercitos();
+          return;
+        case 4:
+          jugar();
+          return;
+        case 5:
+          Game game = new Game();
           continue;
         default:
           System.out.println("Opción inválida. Intente de nuevo.");
@@ -108,8 +117,7 @@ public class CustomBattle {
       System.out.println("g) Ver soldado");
       System.out.println("h) Ver ejército");
       System.out.println("i) Sumar niveles");
-      System.out.println("j) Jugar");
-      System.out.println("k) Volver");
+      System.out.println("j) Volver");
       String opcion = sc.nextLine();
 
       switch (opcion.toLowerCase()) {
@@ -132,7 +140,7 @@ public class CustomBattle {
           intercambiarSoldados(ejercito);
           break;
         case "g":
-          verSoldado();
+          verSoldado(ejercito);
           break;
         case "h":
           verEjercito(ejercito);
@@ -141,9 +149,6 @@ public class CustomBattle {
           sumarNiveles(ejercito);
           break;
         case "j":
-          jugar();
-          return;
-        case "k":
           salir = true;
           break;
         default:
@@ -153,7 +158,7 @@ public class CustomBattle {
   }
 
   private void crearSoldado(List<Soldado> ejercito) {
-    if (ejercito.size() >= 10) {
+    if (ejercito.size() == 10) {
       System.out.println("No se pueden agregar más soldados");
       return;
     }
@@ -191,7 +196,7 @@ public class CustomBattle {
   }
 
   private void clonarSoldado(List<Soldado> ejercito) {
-    if (ejercito.size() >= 10) {
+    if (ejercito.size() == 10) {
       System.out.println("No se pueden agregar más soldados");
       return;
     }
@@ -214,22 +219,26 @@ public class CustomBattle {
     if (index >= 0 && index < ejercito.size()) {
       Soldado soldado = ejercito.get(index);
       System.out.println("Selecciona el atributo a modificar:");
-      System.out.println("1. Nivel de Ataque");
-      System.out.println("2. Nivel de Defensa");
-      System.out.println("3. Vida Actual");
+      System.out.println("1. Nombre");
+      System.out.println("2. Nivel de Ataque");
+      System.out.println("3. Nivel de Defensa");
+      System.out.println("4. Vida Actual");
       int atributo = sc.nextInt();
       System.out.print("Nuevo valor: ");
-      int nuevoValor = sc.nextInt();
+      String nuevoValor = sc.next();
       sc.nextLine(); // Clear the buffer
       switch (atributo) {
         case 1:
-          soldado.setAtkLvl(nuevoValor);
+          soldado.setName(nuevoValor);
           break;
         case 2:
-          soldado.setDefLvl(nuevoValor);
+          soldado.setAtkLvl(Integer.parseInt(nuevoValor));
           break;
         case 3:
-          soldado.setActHP(nuevoValor);
+          soldado.setDefLvl(Integer.parseInt(nuevoValor));
+          break;
+        case 4:
+          soldado.setActHP(Integer.parseInt(nuevoValor));
           break;
         default:
           System.out.println("Atributo no válido");
@@ -272,26 +281,7 @@ public class CustomBattle {
     }
   }
 
-  private void verSoldado() {
-    System.out.println("Selecciona el ejército del soldado:");
-    System.out.println("1. Ejército 1");
-    System.out.println("2. Ejército 2");
-    int opcion = sc.nextInt();
-    sc.nextLine(); // Clear the buffer
-    List<Soldado> ejercito = null;
-
-    switch (opcion) {
-      case 1:
-        ejercito = soldadosTeam1;
-        break;
-      case 2:
-        ejercito = soldadosTeam2;
-        break;
-      default:
-        System.out.println("Opción inválida. Intente de nuevo.");
-        return;
-    }
-
+  private void verSoldado(List<Soldado> ejercito) {
     verEjercito(ejercito);
     System.out.print("Índice del soldado a ver: ");
     int index = sc.nextInt();
@@ -317,24 +307,28 @@ public class CustomBattle {
   }
 
   private void sumarNiveles(List<Soldado> ejercito) {
-    System.out.print("Índice del primer soldado: ");
-    int index1 = sc.nextInt();
-    System.out.print("Índice del segundo soldado: ");
-    int index2 = sc.nextInt();
-    sc.nextLine(); // Clear the buffer
-    if (index1 >= 0 && index1 < ejercito.size() && index2 >= 0 && index2 < ejercito.size()) {
-      Soldado s1 = ejercito.get(index1);
-      Soldado s2 = ejercito.get(index2);
-      int suma = s1.getAtkLvl() + s2.getAtkLvl();
-      System.out.println("La suma de los niveles de ataque es: " + suma);
-    } else {
-      System.out.println("Índices inválidos.");
+    if (ejercito.isEmpty()) {
+      System.out.println("El ejército no tiene soldados.");
+      return;
     }
+
+    Soldado sumatoria = ejercito.get(0);
+
+    for (int i = 1; i < ejercito.size(); i++) {
+      sumatoria = sumatoria.sumar(ejercito.get(i));
+    }
+
+    System.out.println("Sumatoria de niveles del ejército:");
+    System.out.println("Nivel de Ataque: " + sumatoria.getAtkLvl());
+    System.out.println("Nivel de Defensa: " + sumatoria.getDefLvl());
+    System.out.println("Vida Actual: " + sumatoria.getActHP());
+    System.out.println("Velocidad: " + sumatoria.getSpeed());
   }
 
   private void jugar() {
     // Lógica del juego
     System.out.println("Iniciando el juego...");
+    Batalla batalla = new Batalla(tablero);
   }
 
   public static void newSoldier(Soldado[][] tablero, String name, int atk, int def, int hp, int speed, int team,
