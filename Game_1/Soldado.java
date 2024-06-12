@@ -146,7 +146,6 @@ class Soldado {
     this.live = true;
   }
 
-
   public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, int team) {
     this.name = name;
     this.atkLvl = atkLvl;
@@ -157,7 +156,7 @@ class Soldado {
     this.team = team;
   }
 
-    public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, int team, int fila, int columna) {
+  public Soldado(String name, int atkLvl, int defLvl, int hp, int speed, int team, int fila, int columna) {
     this.name = name;
     this.atkLvl = atkLvl;
     this.defLvl = defLvl;
@@ -185,18 +184,6 @@ class Soldado {
     this.speed += 2;
   }
 
-  public void defender(int atkLvl) {
-    this.actt = "Defensive";
-    this.speed = 0;
-    if (this.defLvl < atkLvl) {
-      this.actHP = this.actHP - (atkLvl - this.defLvl);
-      this.defLvl = 0;
-      if (this.actHP <= 0) {
-        this.live = false;
-      }
-    }
-  }
-
   public void morir() {
     this.actHP = 0;
     this.live = false;
@@ -204,27 +191,18 @@ class Soldado {
   }
 
   public void attack(Soldado b) {
-    if (this.atkLvl / 2 > b.getDefLvl()) {
-      if (b.getSpeed() > this.speed) {
-        b.huir();
-      } else {
-        b.defender(this.atkLvl);
-      }
+    double winRateAtacante = Methods.calculateWinRate(this, b);
+    double winRateDefensor = 100 - winRateAtacante;
+    if (winRateAtacante / 2 > winRateDefensor) {
+      b.huir();
     } else {
       this.actt = "Offensive";
       this.speed += 1;
-      if (b.getDefLvl() >= this.atkLvl) {
-        System.out.println("Contrataque causa"); // Depuration msg
-        if (this.defLvl >= b.getAtkLvl()) {
-          this.actt = "Defensive";
-          this.speed = 0;
-          b.attack(this);
-        } else {
-          System.out.println("xD"); // Depuration msg
-          b.setActt("Offensive");
-          this.defender(b.getAtkLvl());
-          b.setSpeed(b.getSpeed() + 1);
-        }
+      System.out.println("xD"); // Depuration msg
+      b.actt = "Defensive";
+      b.setSpeed(0);
+      if (winRateAtacante > winRateDefensor) {
+        b.morir();
       }
     }
   }

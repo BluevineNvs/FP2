@@ -291,6 +291,7 @@ public class Batalla {
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
           if (winRateAtacante > winRateDefensor) {
+            atacante.attack(defensor);
             tablero[x1][y1] = atacante;
             tablero[x][y] = null;
             atacante.setFila(x1);
@@ -582,6 +583,7 @@ public class Batalla {
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
           if (winRateAtacante > winRateDefensor) {
+            atacante.attack(defensor);
             tablero[x1][y1] = atacante;
             tablero[x][y] = null;
             atacante.setFila(x1);
