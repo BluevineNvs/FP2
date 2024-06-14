@@ -38,7 +38,7 @@ class Soldado {
   @Override
   public String toString() {
     return "Soldado [name=" + name + ", atkLvl=" + atkLvl + ", defLvl=" + defLvl + ", hp=" + hp + ", actHP=" + actHP
-        + ", speed=" + speed + ", actt=" + actt + ", live=" + live + "]";
+        + ", speed=" + speed + ", actt=" + actt + ", live=" + live + ", fila=" + fila + ", columna=" + columna + "]";
   }
 
   public String getName() {

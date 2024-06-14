@@ -296,6 +296,8 @@ public class Batalla {
           batallas++;
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
+          System.out.println("El atacante " + atacante.getName() + " tiene una probabilidad de " + winRateAtacante);
+          System.out.println("El defensor " + defensor.getName() + " tiene una probabilidad de " + winRateDefensor);
           if (atacante.getTeam() == defensor.getTeam()) {
             System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
             continue;
@@ -305,9 +307,9 @@ public class Batalla {
             defensor.morir();
             tablero[x][y] = null;
             tablero[x1][y1] = null;
-            System.out.println("El combate estuvo tan reñido que ambos combatientes mueren en la batalla.");
-          }
-          if (winRateAtacante > winRateDefensor) {
+            System.out.println(
+                "El combate estuvo tan reñido, ya que ambos combatientes tenian un porcentaje del 50% de ganar, así que ambos mueren en la batalla.");
+          } else if (winRateAtacante > winRateDefensor) {
             atacante.attack(defensor);
             tablero[x1][y1] = atacante;
             tablero[x][y] = null;
@@ -607,6 +609,8 @@ public class Batalla {
           batallas++;
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
+          System.out.println("El atacante " + atacante.getName() + " tiene una probabilidad de " + winRateAtacante);
+          System.out.println("El defensor " + defensor.getName() + " tiene una probabilidad de " + winRateDefensor);
           if (atacante.getTeam() == defensor.getTeam()) {
             System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
             continue;
@@ -616,9 +620,9 @@ public class Batalla {
             defensor.morir();
             tablero[x][y] = null;
             tablero[x1][y1] = null;
-            System.out.println("El combate estuvo tan reñido que ambos combatientes mueren en la batalla.");
-          }
-          if (winRateAtacante > winRateDefensor) {
+            System.out.println(
+                "El combate estuvo tan reñido, ya que ambos combatientes tenian un porcentaje del 50% de ganar, así que ambos mueren en la batalla.");
+          } else if (winRateAtacante > winRateDefensor) {
             atacante.attack(defensor);
             tablero[x1][y1] = atacante;
             tablero[x][y] = null;
