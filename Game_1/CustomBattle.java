@@ -269,6 +269,8 @@ public class CustomBattle {
 
   private void intercambiarSoldados(List<Soldado> ejercito) {
     verEjercito(ejercito);
+    Soldado b = ejercito.get(0);
+    Methods.mostrarTablero(tablero, b);
     System.out.print("Índice del primer soldado a intercambiar: ");
     int index1 = sc.nextInt();
     System.out.print("Índice del segundo soldado a intercambiar: ");
@@ -279,10 +281,11 @@ public class CustomBattle {
     } else {
       System.out.println("Índices inválidos.");
     }
+    Methods.mostrarTablero(tablero, b);
   }
 
   private void verSoldado(List<Soldado> ejercito) {
-    verEjercito(ejercito);
+    verEjercitoL(ejercito);
     System.out.print("Índice del soldado a ver: ");
     int index = sc.nextInt();
     sc.nextLine(); // Clear the buffer
@@ -302,7 +305,15 @@ public class CustomBattle {
     for (int i = 0; i < ejercito.size(); i++) {
       Soldado s = ejercito.get(i);
       System.out.println(i + ": " + s.getName() + " (Vida: " + s.getActHP() + ", Ataque: " + s.getAtkLvl()
-          + ", Defensa: " + s.getDefLvl() + ")");
+          + ", Defensa: " + s.getDefLvl() + ", Fila: " + s.getFila() + ", Columna: " + s.getColumna() + ")");
+    }
+  }
+
+  private void verEjercitoL(List<Soldado> ejercito) {
+    System.out.println("Ejército:");
+    for (int i = 0; i < ejercito.size(); i++) {
+      Soldado s = ejercito.get(i);
+      System.out.println(i + ": " + s.getName());
     }
   }
 

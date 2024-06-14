@@ -23,6 +23,28 @@ class Methods {
     }
   }
 
+  public static void mostrarTablero(Soldado[][] tablero, Soldado s) {
+    // Imprimir parte de arriba de columnas
+    System.out.print("  ");
+    for (int j = 0; j < 10; j++) {
+      System.out.print("  " + j);
+    }
+    System.out.println();
+
+    for (int i = 0; i < 10; i++) {
+      // Imprimir los números de las filas
+      System.out.print(i + "  ");
+      for (int j = 0; j < 10; j++) {
+        if (tablero[i][j] == null || tablero[i][j].getTeam() != s.getTeam()) {
+          System.out.print("|_|");
+        } else {
+          System.out.print("|" + tablero[i][j].getTeam() + "|");
+        }
+      }
+      System.out.println();
+    }
+  }
+
   public static void verify(Soldado[][] tablero, int x, int y, int x1, int y1) {
     // Verificar si hay un soldado en la posición (x, y)
     if (tablero[x][y] == null) {

@@ -296,8 +296,8 @@ public class Batalla {
           batallas++;
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
-          System.out.println("El atacante " + atacante.getName() + " tiene una probabilidad de " + winRateAtacante);
-          System.out.println("El defensor " + defensor.getName() + " tiene una probabilidad de " + winRateDefensor);
+          System.out.println("El atacante " + atacante.getName() + " tiene una probabilidad de " + winRateAtacante + "%");
+          System.out.println("El defensor " + defensor.getName() + " tiene una probabilidad de " + winRateDefensor + "%");
           if (atacante.getTeam() == defensor.getTeam()) {
             System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
             continue;
@@ -322,7 +322,7 @@ public class Batalla {
             }
           } else {
             tablero[x][y] = null;
-            defensor.attack(atacante);
+            atacante.attack(defensor, winRateAtacante, winRateDefensor);
             bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
             if (soldadoConMasBajas == null || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
               soldadoConMasBajas = defensor;

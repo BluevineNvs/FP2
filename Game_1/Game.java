@@ -5,13 +5,13 @@ class Game {
     int select;
     System.out.println("MENÚ PRINCIPAL");
     System.out.println("¡Bienvenidos comandantes, al campo de batalla!");
-    System.out.println("Dos ejércitos se alistan para la batalla, y solo uno saldrá victorioso, el úlitmo ejército que quede en pie");
+    System.out.println("Dos ejércitos se alistan para la batalla, y solo uno saldrá victorioso, el último ejército que quede en pie");
     System.out.println("Cada soldado luchará con el coraje de un héroe, empuñando su arma con destreza y determinación");
     System.out.println("Los ataques resonarán como truenos, mientras las defensas se alzarán como fortalezas impenetrables");
     System.out.println("Y en medio de todo este caos, solo los más fuertes y los más astutos podrán vencer y asegurar su lugar en la historia");
-    System.out.println("Que la batalla sea épica y legendaria");
+    System.out.println("¡Que la batalla sea épica y legendaria!");
 
-    System.out.println("Elijan con sabiduría la opción que deseen utilizar:");
+    System.out.println("Elijan con sabiduría la opción que deseen escoger:");
     System.out.println("1. Juego Rápido");
     System.out.println("2. Juego Personalizado");
     System.out.println("3. Salir");

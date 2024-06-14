@@ -216,4 +216,28 @@ class Soldado {
       }
     }
   }
+
+  public void attack(Soldado b, double winRateAtacante, double winRateDefensor) {
+    System.out.println("El soldado: " + this.name + " ataca al soldado: " + b.getName()
+        + " con una probabilidad de victoria de: " + winRateAtacante + "%");
+    if (winRateAtacante / 2 > winRateDefensor) {
+      System.out.println();
+      System.out.println("El soldado: " + b.getName() + " ha huido de la batalla");
+      b.huir();
+    } else {
+      this.actt = "Offensive";
+      this.speed += 1;
+      b.actt = "Defensive";
+      b.setSpeed(0);
+      if (winRateAtacante > winRateDefensor) {
+        System.out.println("El soldado: " + this.name + " ha matado al soldado enemigo: " + b.getName());
+        b.morir();
+      } else {
+        if (winRateAtacante < winRateDefensor) {
+          this.morir();
+          System.out.println("El soldado: " + this.name + " ha muerto a manos del soldado: " + b.getName());
+        }
+      }
+    }
+  }
 }
