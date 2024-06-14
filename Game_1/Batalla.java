@@ -228,6 +228,12 @@ public class Batalla {
       Soldado soldadoConMasBajas = null;
       Map<Soldado, Integer> bajasPorSoldado = new HashMap<>();
 
+      System.out.println("Estadísticas completas de los soldados iniciales:");
+      for (Soldado s : todosLosSoldados) {
+        System.out.println(s);
+      }
+      System.out.println();
+
       while (!gameOver) {
         Methods.mostrarTablero(tablero);
         int x, y, x1, y1;
@@ -290,6 +296,17 @@ public class Batalla {
           batallas++;
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
+          if (atacante.getTeam() == defensor.getTeam()) {
+            System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
+            continue;
+          }
+          if (winRateAtacante == winRateDefensor) {
+            atacante.morir();
+            defensor.morir();
+            tablero[x][y] = null;
+            tablero[x1][y1] = null;
+            System.out.println("El combate estuvo tan reñido que ambos combatientes mueren en la batalla.");
+          }
           if (winRateAtacante > winRateDefensor) {
             atacante.attack(defensor);
             tablero[x1][y1] = atacante;
@@ -303,6 +320,7 @@ public class Batalla {
             }
           } else {
             tablero[x][y] = null;
+            defensor.attack(atacante);
             bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
             if (soldadoConMasBajas == null || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
               soldadoConMasBajas = defensor;
@@ -310,6 +328,7 @@ public class Batalla {
           }
         } else {
           tablero[x1][y1] = atacante;
+          System.out.println("El soldado " + atacante.getName() + " ahora ocupa la posicion (" + x + ", " + y + ")");
           tablero[x][y] = null;
           atacante.setFila(x1);
           atacante.setColumna(y1);
@@ -501,7 +520,7 @@ public class Batalla {
       System.out.println();
       System.out.println("----------------------------------------------------");
 
-      System.out.println("¡Bienvenidos al Juego de Batallas de Soldados PVP!");
+      System.out.println("¡Bienvenidos al Juego de Batallas Personalizadas de Soldados PVP!");
       System.out.println();
       System.out.println("Reglas del Juego:");
       System.out.println("1. PvP (Jugador contra Jugador): Dos ejércitos se enfrentan en un tablero de 10x10.");
@@ -519,6 +538,12 @@ public class Batalla {
       int batallas = 0;
       Soldado soldadoConMasBajas = null;
       Map<Soldado, Integer> bajasPorSoldado = new HashMap<>();
+
+      System.out.println("Estadísticas completas de los soldados iniciales:");
+      for (Soldado s : todosLosSoldados) {
+        System.out.println(s);
+      }
+      System.out.println();
 
       while (!gameOver) {
         Methods.mostrarTablero(tablero);
@@ -582,6 +607,17 @@ public class Batalla {
           batallas++;
           double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
           double winRateDefensor = 100 - winRateAtacante;
+          if (atacante.getTeam() == defensor.getTeam()) {
+            System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
+            continue;
+          }
+          if (winRateAtacante == winRateDefensor) {
+            atacante.morir();
+            defensor.morir();
+            tablero[x][y] = null;
+            tablero[x1][y1] = null;
+            System.out.println("El combate estuvo tan reñido que ambos combatientes mueren en la batalla.");
+          }
           if (winRateAtacante > winRateDefensor) {
             atacante.attack(defensor);
             tablero[x1][y1] = atacante;
@@ -595,6 +631,7 @@ public class Batalla {
             }
           } else {
             tablero[x][y] = null;
+            defensor.attack(atacante);
             bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
             if (soldadoConMasBajas == null || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
               soldadoConMasBajas = defensor;
@@ -602,6 +639,7 @@ public class Batalla {
           }
         } else {
           tablero[x1][y1] = atacante;
+          System.out.println("El soldado " + atacante.getName() + " ahora ocupa la posicion (" + x + ", " + y + ")");
           tablero[x][y] = null;
           atacante.setFila(x1);
           atacante.setColumna(y1);

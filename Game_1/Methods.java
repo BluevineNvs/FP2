@@ -1,4 +1,5 @@
 import java.util.*;
+
 class Methods {
   public static void mostrarTablero(Soldado[][] tablero) {
     // Imprimir parte de arriba de columnas
@@ -114,7 +115,7 @@ class Methods {
         + bajasPorSoldado.get(soldadoConMasBajas) + " bajas");
 
     System.out.println();
-    System.out.println("Estadísticas completas de los soldados:");
+    System.out.println("Estadísticas completas de los soldados finales:");
 
     for (Soldado s : todosLosSoldados) {
       System.out.println(s);
