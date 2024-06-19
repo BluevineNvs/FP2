@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Ejercito {
   private String key;
@@ -38,7 +37,6 @@ public class Ejercito {
     return soldados;
   }
 
-  // Método para obtener los soldados de este ejército
   public List<Soldado> getSoldados() {
     return soldadosTeam1;
   }
