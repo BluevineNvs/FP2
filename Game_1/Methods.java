@@ -17,8 +17,6 @@ class Methods {
 
     Scanner sc = new Scanner(System.in);
     boolean gameOver = false;
-    int batallas = 0;
-    Map<Soldado, Integer> bajasPorSoldado = new HashMap<>();
 
     while (!gameOver) {
       crearTableroReinos(tablero);
@@ -46,7 +44,7 @@ class Methods {
         System.out.print("x1, y1: ");
         String nuevasCoordenadas = sc.nextLine();
         partes = nuevasCoordenadas.split(",");
-        
+
         if (nuevasCoordenadas.equalsIgnoreCase("pause")) {
           pauseMenu2(tablero);
           continue;
@@ -60,13 +58,13 @@ class Methods {
         x1 = Integer.parseInt(partes[0]);
         y1 = Integer.parseInt(partes[1]);
 
-        System.out.println("Siguiente turno...");
+        System.out.println("AL ATAQUE!!!...");
 
         if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10) {
           if (tablero[x][y] != null) {
             break;
           } else {
-            System.out.println("No hay un soldado en la posición inicial. Intente de nuevo.");
+            System.out.println("No hay un Ejercito en la posición inicial. Intente de nuevo.");
             crearTableroReinos(tablero);
           }
         } else {
@@ -76,65 +74,38 @@ class Methods {
       }
 
       Ejercito atacante = tablero[x][y];
-      Ejercito defensor = tablero[x1][y1];}
+      Ejercito defensor = tablero[x1][y1];
 
-     /* if (defensor != null) {
-        batallas++;
-        if (atacante.getKey() == defensor.getKey()) {
-          System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
-          continue;
-        }
-         if (winRateAtacante == winRateDefensor) {
-          atacante.morir();
-          defensor.morir();
-          tablero[x][y] = null;
-          tablero[x1][y1] = null;
-          System.out.println(
-              "El combate estuvo tan reñido, ya que ambos combatientes tenian un porcentaje del 50% de ganar, así que ambos mueren en la batalla.");
-        } else if (winRateAtacante > winRateDefensor) {
-          atacante.attack(defensor);
-          tablero[x1][y1] = atacante;
-          tablero[x][y] = null;
-          atacante.setFila(x1);
-          atacante.setColumna(y1);
-          atacante.setActHP(atacante.getHp() + 1);
-          bajasPorSoldado.put(atacante, bajasPorSoldado.getOrDefault(atacante, 0) + 1);
-          if (soldadoConMasBajas == null || bajasPorSoldado.get(atacante) > bajasPorSoldado.get(soldadoConMasBajas)) {
-            soldadoConMasBajas = atacante;
-          }
-        } else {
-          tablero[x][y] = null;
-          atacante.attack(defensor, winRateAtacante, winRateDefensor);
-          bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
-          if (soldadoConMasBajas == null || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
-            soldadoConMasBajas = defensor;
-          }
-        }
-      } else {
-        tablero[x1][y1] = atacante;
-        System.out.println("El soldado " + atacante.getName() + " ahora ocupa la posicion (" + x + ", " + y + ")");
-        tablero[x][y] = null;
-        atacante.setFila(x1);
-        atacante.setColumna(y1);
+      if (atacante.getKey() == defensor.getKey()) {
+        System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
+        continue;
       }
-
+      Ejercito winner = Methods.attack(atacante, defensor);
+      if (winner == atacante) {
+        tablero[x1][y1] = atacante;
+        tablero[x][y] = null;
+        System.out.println(
+            "El ejercito " + atacante.getKey() + " gano el combate, ahora ocupa la posicion (" + x1 + ", " + y1 + ")");
+      } else {
+        tablero[x][y] = null;
+        System.out.println("El ejercito " + defensor.getKey()
+            + " gano el combate y seguira ocupando la misma posicion (" + x1 + ", " + y1 + ")");
+      }
       // Verificar si el juego ha terminado
-      int sumaVid1 = Methods.calcularSumaVidaEquipo(tablero, 1);
-      int sumaVid2 = Methods.calcularSumaVidaEquipo(tablero, 2);
+      int sumaVid1 = Methods.calcularSoldadosVivos(tablero, atacante.getKey());
+      int sumaVid2 = Methods.calcularSoldadosVivos(tablero, defensor.getKey());
       if (sumaVid1 == 0) {
-        Methods.mostrarTablero(tablero);
-        System.out.println("El Ejercito 2 gana la batalla");
+        Methods.crearTableroReinos(tablero);
+        System.out.println("El Reino " + defensor.getName() + " gana la batalla");
         gameOver = true;
-        Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 2, batallas, soldadoConMasBajas, bajasPorSoldado);
       } else if (sumaVid2 == 0) {
-        Methods.mostrarTablero(tablero);
-        System.out.println("El Ejercito 1 gana la batalla");
+        Methods.crearTableroReinos(tablero);
+        System.out.println("El Reino " + atacante.getName() + " gana la batalla");
         gameOver = true;
-        Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 1, batallas, soldadoConMasBajas, bajasPorSoldado);
       }
     }
     System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
-    endMenu();
+    endMenu2();
     sc.close();
   }
 
@@ -270,7 +241,226 @@ class Methods {
     }
     System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
     endMenu();
-    sc.close();*/
+    sc.close();
+  }
+
+  public static List<Soldado> autoSelectWinner(List<Soldado> Army1, List<Soldado> Army2) {
+    // Select winner
+    int sumaVidaEj1 = 0;
+    for (Soldado s : Army1) {
+      sumaVidaEj1 += s.getHp();
+    }
+
+    int sumaVidaEj2 = 0;
+    for (Soldado s : Army2) {
+      sumaVidaEj2 += s.getHp();
+    }
+
+    System.out.println();
+    System.out.println();
+    System.out.println("-----------------------------");
+    System.out.println();
+    System.out.println("EN BASE A LOS PUNTOS DE VIDA:" + sumaVidaEj1 + " VS " + sumaVidaEj2);
+    System.out.println();
+    if (sumaVidaEj1 > sumaVidaEj2) {
+      return Army1;
+    } else if (sumaVidaEj2 > sumaVidaEj1) {
+      return Army2;
+    } else {
+      System.out.println("Empate");
+      return null;
+    }
+  }
+
+  public static Ejercito attack(Ejercito a, Ejercito b) {
+    List<Soldado> Army1 = a.getSoldados();
+    List<Soldado> Army2 = b.getSoldados();
+
+    if (Army1 != null && Army2 != null) {
+      // Inicializar tablero
+      Soldado[][] tablero = new Soldado[10][10];
+      List<Soldado> todosLosSoldados = new ArrayList<>();
+
+      // Army 1
+      for (Soldado s : Army1) {
+        int fila, col;
+        do {
+          fila = (int) (Math.random() * 10);
+          col = (int) (Math.random() * 10);
+        } while (tablero[fila][col] != null);
+        s.setFila(fila);
+        s.setColumna(col);
+        s.setTeam(1);
+        tablero[fila][col] = s;
+        todosLosSoldados.add(s);
+      }
+
+      // Army 2
+      for (Soldado s : Army2) {
+        int fila, col;
+        do {
+          fila = (int) (Math.random() * 10);
+          col = (int) (Math.random() * 10);
+        } while (tablero[fila][col] != null);
+        s.setFila(fila);
+        s.setColumna(col);
+        s.setTeam(2);
+        tablero[fila][col] = s;
+        todosLosSoldados.add(s);
+      }
+
+      System.out.println("Seleccione el tipo de Juego: ");
+      System.out.println("1. Juego Automatico");
+      System.out.println("2. Juego Manual");
+      Scanner sc = new Scanner(System.in);
+      int option = sc.nextInt();
+      if (option == 1) {
+        List<Soldado> automaticWinner = Methods.autoSelectWinner(Army1, Army2);
+        if (automaticWinner == Army1) {
+          return a;
+        } else if (automaticWinner == Army2) {
+          return b;
+        }
+      } else {
+        // Lógica de combate
+        boolean gameOver = false;
+        int batallas = 0;
+        Soldado soldadoConMasBajas = null;
+        Map<Soldado, Integer> bajasPorSoldado = new HashMap<>();
+
+        System.out.println("Estadísticas completas de los soldados iniciales:");
+        for (Soldado s : todosLosSoldados) {
+          System.out.println(s);
+        }
+        System.out.println();
+
+        while (!gameOver) {
+          Methods.mostrarTablero(tablero);
+          int x, y, x1, y1;
+          while (true) {
+            System.out.println("Ingrese las coordenadas del soldado a seleccionar (x, y):");
+            System.out.print("x, y: ");
+            String coordenadas = sc.nextLine();
+            String[] partes = coordenadas.split(",");
+
+            if (coordenadas.equalsIgnoreCase("pause")) {
+              Methods.pauseMenu(tablero);
+              continue;
+            }
+
+            if (partes.length != 2) {
+              System.out.println("Entrada inválida. Intente de nuevo.");
+              continue;
+            }
+
+            x = Integer.parseInt(partes[0]);
+            y = Integer.parseInt(partes[1]);
+
+            System.out.println("Ingrese las nuevas coordenadas (x1, y1):");
+            System.out.print("x1, y1: ");
+            String nuevasCoordenadas = sc.nextLine();
+            partes = nuevasCoordenadas.split(",");
+
+            if (nuevasCoordenadas.equalsIgnoreCase("pause")) {
+              Methods.pauseMenu(tablero);
+              continue;
+            }
+
+            if (partes.length != 2) {
+              System.out.println("Entrada inválida. Intente de nuevo.");
+              continue;
+            }
+
+            x1 = Integer.parseInt(partes[0]);
+            y1 = Integer.parseInt(partes[1]);
+
+            System.out.println("Siguiente turno...");
+
+            if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10) {
+              if (tablero[x][y] != null) {
+                break;
+              } else {
+                System.out.println("No hay un soldado en la posición inicial. Intente de nuevo.");
+                Methods.mostrarTablero(tablero);
+              }
+            } else {
+              System.out.println("Coordenadas fuera de rango. Intente de nuevo.");
+              Methods.mostrarTablero(tablero);
+            }
+          }
+
+          Soldado atacante = tablero[x][y];
+          Soldado defensor = tablero[x1][y1];
+
+          if (defensor != null) {
+            batallas++;
+            double winRateAtacante = Methods.calculateWinRate(atacante, defensor);
+            double winRateDefensor = 100 - winRateAtacante;
+            System.out
+                .println("El atacante " + atacante.getName() + " tiene una probabilidad de " + winRateAtacante + "%");
+            System.out
+                .println("El defensor " + defensor.getName() + " tiene una probabilidad de " + winRateDefensor + "%");
+            if (atacante.getTeam() == defensor.getTeam()) {
+              System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
+              continue;
+            }
+            if (winRateAtacante == winRateDefensor) {
+              atacante.morir();
+              defensor.morir();
+              tablero[x][y] = null;
+              tablero[x1][y1] = null;
+              System.out.println(
+                  "El combate estuvo tan reñido, ya que ambos combatientes tenían un porcentaje del 50% de ganar, así que ambos mueren en la batalla.");
+            } else if (winRateAtacante > winRateDefensor) {
+              atacante.attack(defensor);
+              tablero[x1][y1] = atacante;
+              tablero[x][y] = null;
+              atacante.setFila(x1);
+              atacante.setColumna(y1);
+              atacante.setActHP(atacante.getHp() + 1);
+              bajasPorSoldado.put(atacante, bajasPorSoldado.getOrDefault(atacante, 0) + 1);
+              if (soldadoConMasBajas == null
+                  || bajasPorSoldado.get(atacante) > bajasPorSoldado.get(soldadoConMasBajas)) {
+                soldadoConMasBajas = atacante;
+              }
+            } else {
+              tablero[x][y] = null;
+              atacante.attack(defensor, winRateAtacante, winRateDefensor);
+              bajasPorSoldado.put(defensor, bajasPorSoldado.getOrDefault(defensor, 0) + 1);
+              if (soldadoConMasBajas == null
+                  || bajasPorSoldado.get(defensor) > bajasPorSoldado.get(soldadoConMasBajas)) {
+                soldadoConMasBajas = defensor;
+              }
+            }
+          } else {
+            tablero[x1][y1] = atacante;
+            System.out
+                .println("El soldado " + atacante.getName() + " ahora ocupa la posición (" + x1 + ", " + y1 + ")");
+            tablero[x][y] = null;
+            atacante.setFila(x1);
+            atacante.setColumna(y1);
+          }
+
+          // Verificar si el juego ha terminado
+          int sumaVid1 = Methods.calcularSumaVidaEquipo(tablero, 1);
+          int sumaVid2 = Methods.calcularSumaVidaEquipo(tablero, 2);
+          if (sumaVid1 == 0) {
+            Methods.mostrarTablero(tablero);
+            System.out.println("El Ejercito 2 gana la batalla");
+            gameOver = true;
+            Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 2, batallas, soldadoConMasBajas, bajasPorSoldado);
+            return b;
+          } else if (sumaVid2 == 0) {
+            Methods.mostrarTablero(tablero);
+            System.out.println("El Ejercito 1 gana la batalla");
+            gameOver = true;
+            Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 1, batallas, soldadoConMasBajas, bajasPorSoldado);
+            return a;
+          }
+        }
+      }
+    }
+    return null;
   }
 
   public void Gamesito(Soldado[][] tablero, List<Soldado> todosLosSoldados) {
@@ -417,7 +607,7 @@ class Methods {
       }
     }
     System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
-    endMenu();
+    endMenu2();
     sc.close();
   }
 
@@ -442,12 +632,11 @@ class Methods {
     }
   }
 
-  public static void pauseMenu2(Ejercito[][] tablero) {
+  public static void endMenu2() {
     Scanner sc = new Scanner(System.in);
-    System.out.println("PAUSE MENU: ");
-    System.out.println("1. Nuevo Juego");
-    System.out.println("2. Menu Principal");
-    System.out.println("3. Continuar Juego");
+    System.out.println("MENU: ");
+    System.out.println("1. Jugar de Nuevo");
+    System.out.println("2. Salir");
     System.out.println();
     System.out.println("Selecciona tu opción");
     int z = sc.nextInt();
@@ -456,11 +645,35 @@ class Methods {
         NewGame game = new NewGame();
         break;
       case 2:
-        // AUN NO EXISTE MENU PRINCIPALNewGame game = new NewGame();
+        System.out.println("Saliendo del Juego...");
+        System.exit(0);
         break;
-      case 3:
+      default:
+        System.out.println("Opción inválida");
+        break;
+    }
+  }
+
+  public static void pauseMenu2(Ejercito[][] tablero) {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("PAUSE MENU: ");
+    System.out.println("1. Nuevo Juego");
+    System.out.println("2. Continuar Juego");
+    System.out.println("3. Salir");
+    System.out.println();
+    System.out.println("Selecciona tu opción");
+    int z = sc.nextInt();
+    switch (z) {
+      case 1:
+        NewGame game = new NewGame();
+        break;
+      case 2:
         System.out.println("Continuando Juego...");
         Methods.crearTableroReinos(tablero);
+        break;
+      case 3:
+        System.out.println("Saliendo del Juego...");
+        System.exit(0);
         break;
       default:
         System.out.println("Opción inválida");
@@ -659,6 +872,19 @@ class Methods {
       }
     }
     return sumaVida;
+  }
+
+  public static int calcularSoldadosVivos(Ejercito[][] tablero, String key) {
+    int soldados = 0;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        Ejercito s = tablero[i][j];
+        if (s != null && s.getKey() == key) {
+          soldados += 1;
+        }
+      }
+    }
+    return soldados;
   }
 
   public static void imprimirResultadoFinal(Soldado[][] tablero, List<Soldado> todosLosSoldados, int equipoGanador,

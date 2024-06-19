@@ -1,55 +1,52 @@
 import java.util.*;
 
 public class NewGame {
+  private static final String[] REINOS = { "Inglaterra", "Francia", "Sacro Imperio", "Castilla - Aragon", "Moros" };
+
   public NewGame() {
-    Reino reino1 = consulter();
-    Reino reino2 = consulter();
-    while ((reino1.getName().equals(reino2.getName()) == true)) {
-      System.out.println("No puedes seleccionar el mismo reino dos veces.");
-      reino2 = consulter();
-    }
+    System.out.println("¡Bienvenidos al Juego de Batallas de Reinos PVP!");
+    System.out.println();
+    System.out.println("Reglas del Juego:");
+    System.out.println(
+        "1. PvP o Simulación(Jugador contra Jugador o Jugador Contra Simulación): Dos ejércitos se enfrentan en un tablero de 10x10.");
+    System.out.println("2. Objetivo: El Reino que quede con ejercitos en el campo gana.");
+    System.out.println("3. Movimiento: Selecciona un ejercitos y una nueva posición.");
+    System.out.println("4. Combate: Si la nueva posición tiene un enemigo, se combate.");
+    System.out.println();
+    System.out.println("En caso querer poner pausa, ingresa ´pause´ en cualquier momento :)");
+    System.out.println();
+    System.out.println("¡Buena Suerte! ¡Que comience el juego!");
+    System.out.println();
+
+    List<String> opcionesReinos = new ArrayList<>(Arrays.asList(REINOS));
+    Reino reino1 = consulter(opcionesReinos);
+    opcionesReinos.remove(reino1.getName());
+    Reino reino2 = consulter(opcionesReinos);
+
     Ejercito[][] tablero1 = new Ejercito[10][10];
     Methods.llenarTablero(tablero1, reino1, reino2);
     List<Ejercito> a = reino1.getEjercitos();
     Methods.ReinosGameplay(tablero1, a);
-
   }
 
-  public Reino consulter() {
+  public Reino consulter(List<String> opcionesReinos) {
+    Scanner sc = new Scanner(System.in);
     while (true) {
       System.out.println("REINOS DISPONIBLES: ");
-      System.out.println("A: Inglaterra");
-      System.out.println("B: Francia");
-      System.out.println("C: Sacro Imperio");
-      System.out.println("D: Castilla - Aragon");
-      System.out.println("E: Moros");
+      for (int i = 0; i < opcionesReinos.size(); i++) {
+        System.out.println((char) ('A' + i) + ": " + opcionesReinos.get(i));
+      }
       System.out.println("Ingrese la letra del Reino a seleccionar: ");
-      Scanner sc = new Scanner(System.in);
       String option = sc.nextLine().toUpperCase();
-      Reino reino = null;
-      switch (option) {
-        case "A":
-          reino = new Reino("Ingles");
-          reino.setName("Inglaterra");
-          return reino;
-        case "B":
-          reino = new Reino("Frances");
-          reino.setName("Francia");
-          return reino;
-        case "C":
-          reino = new Reino("Sacro Imperiano");
-          reino.setName("Sacro Imperio");
-          return reino;
-        case "D":
-          reino = new Reino("Castillano");
-          reino.setName("Castilla - Aragon");
-          return reino;
-        case "E":
-          reino = new Reino("Moroso");
-          reino.setName("Moros");
-          return reino;
-        default:
-          System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
+      int index = option.charAt(0) - 'A';
+
+      if (index >= 0 && index < opcionesReinos.size()) {
+        String nombreReino = opcionesReinos.get(index);
+        Reino reino = new Reino(nombreReino);
+        reino.setName(nombreReino);
+        return reino;
+      } else {
+        System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
       }
     }
   }
