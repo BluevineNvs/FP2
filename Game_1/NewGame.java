@@ -13,7 +13,6 @@ public class NewGame {
     System.out.println("3. Movimiento: Selecciona un ejercitos y una nueva posición.");
     System.out.println("4. Combate: Si la nueva posición tiene un enemigo, se combate.");
     System.out.println();
-    System.out.println("En caso querer poner pausa, ingresa ´pause´ en cualquier momento :)");
     System.out.println();
     System.out.println("¡Buena Suerte! ¡Que comience el juego!");
     System.out.println();
@@ -26,7 +25,23 @@ public class NewGame {
     Ejercito[][] tablero1 = new Ejercito[10][10];
     Methods.llenarTablero(tablero1, reino1, reino2);
     List<Ejercito> a = reino1.getEjercitos();
-    Methods.ReinosGameplay(tablero1, a);
+    List<Ejercito> b = reino2.getEjercitos();
+    System.out.println("1: Juego Normal");
+    System.out.println("2: Juego Personalizado");
+    Scanner sc = new Scanner(System.in);
+    int n = sc.nextInt();
+    switch (n) {
+      case 1:
+        Methods.ReinosGameplay(tablero1, a);
+        break;
+      case 2:
+        a = Methods.ReinosGameplayCustom(tablero1, a, b);
+        Methods.ReinosGameplay(tablero1, a);
+        break;
+      default:
+        System.out.println("Ingrese una opción valida");
+        break;
+    }
   }
 
   public Reino consulter(List<String> opcionesReinos) {

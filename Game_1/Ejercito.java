@@ -2,8 +2,9 @@ import java.util.*;
 
 public class Ejercito {
   private String key;
-  private List<Soldado> soldadosTeam1;
+  private List<Soldado> misSoldados;
   private String name;
+  private int z;
 
   public String getName() {
     return name;
@@ -16,11 +17,17 @@ public class Ejercito {
   public Ejercito(String name, String key, int z) {
     this.name = name;
     this.key = key;
-    this.soldadosTeam1 = gen_ejercito(name);
-    /*System.out.println("Ejercito " + name + " N°" + (z + 1) + ": ");
-    for (Soldado s : soldadosTeam1) {
-      System.out.println(s.getName() + " HP: " + s.getHp() + " ActHP: " + s.getActHP());
-    }*/
+    this.misSoldados = gen_ejercito(name);
+    this.z = z + 1;
+  }
+
+  @Override
+  public String toString() {
+    String result = "Ejercito [name=" + name + ", key=" + key + ", Numero°=" + z + "]\n";
+    for (Soldado s : misSoldados) {
+      result += s.toString() + "\n";
+    }
+    return result;
   }
 
   public List<Soldado> gen_ejercito(String name) {
@@ -38,6 +45,6 @@ public class Ejercito {
   }
 
   public List<Soldado> getSoldados() {
-    return soldadosTeam1;
+    return misSoldados;
   }
 }

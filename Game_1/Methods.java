@@ -1,6 +1,139 @@
 import java.util.*;
 
 class Methods {
+  public static List<Ejercito> ReinosGameplayCustom(Ejercito[][] tablero, List<Ejercito> teamA, List<Ejercito> teamB) {
+    List<Ejercito> todosLosSoldaditos = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Ingrese Ejercito a Modificar: ");
+    System.out.println("1: Ejercito 1");
+    System.out.println("2: Ejercito 2");
+    int imput = sc.nextInt();
+    if(imput == 1){
+      todosLosSoldaditos = teamA;
+    }else{
+      todosLosSoldaditos = teamB;
+    }
+    for (Ejercito s : todosLosSoldaditos) {
+      System.out.println(s.toString());
+    }
+    System.out.println("Seleccione la opcion del Juego Personalizado: ");
+    System.out.println("1. Modificar Soldados");
+    System.out.println("2. Autogenerar Soldados");
+    System.out.println("3. Eliminar Soldados");
+    sc.nextLine();
+    String a = sc.nextLine();
+    switch (a) {
+      case "1":
+        System.out.println("Ingrese el nombre del soldado a modificar: ");
+        String nombreBuscado = sc.nextLine();
+        Soldado soldadoBuscado = null;
+
+        for (Ejercito ejercito : todosLosSoldaditos) {
+          for (Soldado soldado : ejercito.getSoldados()) {
+            if (soldado.getName().equals(nombreBuscado)) {
+              soldadoBuscado = soldado;
+              break;
+            }
+          }
+          if (soldadoBuscado != null) {
+            break;
+          }
+        }
+
+        if (soldadoBuscado != null) {
+          System.out.println("Soldado seleccionado: " + soldadoBuscado);
+
+          System.out.println("Ingrese el nuevo nombre del soldado, si no desea cambiarlo, apretar enter: ");
+          String newName = sc.nextLine();
+          if (!newName.equals("")) {
+            soldadoBuscado.setName(newName);
+          }
+
+          System.out.println("Ingrese el nuevo nivel de ataque del soldado, si no desea cambiarlo, apretar enter: ");
+          String newAtkLvl = sc.nextLine();
+          if (!newAtkLvl.equals("")) {
+            soldadoBuscado.setAtkLvl(Integer.parseInt(newAtkLvl));
+          }
+
+          System.out.println("Ingrese el nuevo nivel de defensa del soldado, si no desea cambiarlo, apretar enter: ");
+          String newDefLvl = sc.nextLine();
+          if (!newDefLvl.equals("")) {
+            soldadoBuscado.setDefLvl(Integer.parseInt(newDefLvl));
+          }
+
+          System.out.println("Ingrese los nuevos puntos de vida del soldado, si no desea cambiarlo, apretar enter: ");
+          String newHp = sc.nextLine();
+          if (!newHp.equals("")) {
+            soldadoBuscado.setHp(Integer.parseInt(newHp));
+          }
+
+          System.out.println(
+              "Ingrese los nuevos puntos de vida actuales del soldado, si no desea cambiarlo, apretar enter: ");
+          String newActHP = sc.nextLine();
+          if (!newActHP.equals("")) {
+            soldadoBuscado.setActHP(Integer.parseInt(newActHP));
+          }
+
+          System.out.println("Ingrese la nueva velocidad del soldado, si no desea cambiarlo, apretar enter: ");
+          String newSpeed = sc.nextLine();
+          if (!newSpeed.equals("")) {
+            soldadoBuscado.setSpeed(Integer.parseInt(newSpeed));
+          }
+
+          System.out.println("Ingrese la nueva acción del soldado, si no desea cambiarlo, apretar enter: ");
+          String newActt = sc.nextLine();
+          if (!newActt.equals("")) {
+            soldadoBuscado.setActt(newActt);
+          }
+
+        } else {
+          System.out.println("Soldado no encontrado");
+        }
+        break;
+      case "2":
+        System.out.println("Soldados Autogenerados");
+        break;
+      case "3":
+        System.out.println("Ingrese el nombre del soldado a eliminar: ");
+        String nombreBuscado2 = sc.nextLine();
+        Soldado soldadoBuscado2 = null;
+
+        for (Ejercito ejercito : todosLosSoldaditos) {
+          for (Soldado soldado : ejercito.getSoldados()) {
+            if (soldado.getName().equals(nombreBuscado2)) {
+              soldadoBuscado2 = soldado;
+              break;
+            }
+          }
+          if (soldadoBuscado2 != null) {
+            break;
+          }
+        }
+
+        if (soldadoBuscado2 != null) {
+          System.out.println("Soldado seleccionado: " + soldadoBuscado2);
+          System.out.println("¿Está seguro de que desea eliminar este soldado? (s/n)");
+          String confirmacion = sc.nextLine();
+          if (confirmacion.equals("s")) {
+            for (Ejercito ejercito : todosLosSoldaditos) {
+              ejercito.getSoldados().remove(soldadoBuscado2);
+            }
+            System.out.println("Soldado eliminado con éxito");
+          } else {
+            System.out.println("Operación cancelada");
+          }
+        } else {
+          System.out.println("Soldado no encontrado");
+        }
+        break;
+
+      default:
+        System.out.println("Opción no valida");
+        break;
+    }
+    return todosLosSoldaditos;
+  }
+
   public static void ReinosGameplay(Ejercito[][] tablero, List<Ejercito> todosLosSoldados) {
     System.out.println("¡Bienvenidos al Juego de Batallas de Reinos PVP!");
     System.out.println();
@@ -11,6 +144,7 @@ class Methods {
     System.out.println("4. Combate: Si la nueva posición tiene un enemigo, se combate.");
     System.out.println();
     System.out.println("En caso querer poner pausa, ingresa ´pause´ en cualquier momento :)");
+    System.out.println("En caso quieras ver las estadísticas de los soldados, ingresa 'info' en cualquier momento :)");
     System.out.println();
     System.out.println("¡Buena Suerte! ¡Que comience el juego!");
     System.out.println();
@@ -29,6 +163,17 @@ class Methods {
 
         if (coordenadas.equalsIgnoreCase("pause")) {
           pauseMenu2(tablero);
+          continue;
+        }
+
+        if (coordenadas.equalsIgnoreCase("info")) {
+          List<Soldado> todosLosSoldad = new ArrayList<>();
+          for (Ejercito ejercito : todosLosSoldados) {
+            for (Soldado soldado : ejercito.getSoldados()) {
+              todosLosSoldad.add(soldado);
+            }
+          }
+          info(todosLosSoldad);
           continue;
         }
 
@@ -242,6 +387,126 @@ class Methods {
     System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
     endMenu();
     sc.close();
+  }
+
+  public static void info(List<Soldado> todosLosSoldados) {
+    Soldado mayorVidaEj1 = null;
+    Soldado mayorVidaEj2 = null;
+    for (Soldado s : todosLosSoldados) {
+      if (s.getName().startsWith("SoldadoEj1_") && (mayorVidaEj1 == null || s.getHp() > mayorVidaEj1.getHp())) {
+        mayorVidaEj1 = s;
+      }
+      if (s.getName().startsWith("SoldadoEj2_") && (mayorVidaEj2 == null || s.getHp() > mayorVidaEj2.getHp())) {
+        mayorVidaEj2 = s;
+      }
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldado con mayor vida Ejército 1:");
+    System.out.println(mayorVidaEj1);
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldado con mayor vida Ejército 2:");
+    System.out.println(mayorVidaEj2);
+
+    // Promedio vida de cada ejército
+    int countEj1 = 0, countEj2 = 0;
+    int sumaEj1 = 0, sumaEj2 = 0;
+
+    for (Soldado s : todosLosSoldados) {
+      if (s.getName().startsWith("SoldadoEj1_")) {
+        sumaEj1 += s.getHp();
+        countEj1++;
+      } else {
+        sumaEj2 += s.getHp();
+        countEj2++;
+      }
+    }
+
+    double promEj1 = (double) sumaEj1 / countEj1;
+    double promEj2 = (double) sumaEj2 / countEj2;
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Promedio vida Ejército 1: " + promEj1);
+    System.out.println("Promedio vida Ejército 2: " + promEj2);
+
+    // Soldados por orden de creación
+    ArrayList<Soldado> soldadosEj1 = new ArrayList<>();
+    ArrayList<Soldado> soldadosEj2 = new ArrayList<>();
+
+    for (Soldado s : todosLosSoldados) {
+      if (s.getName().startsWith("SoldadoEj1_")) {
+        soldadosEj1.add(s);
+      } else {
+        soldadosEj2.add(s);
+      }
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldados Ejército 1:");
+    for (Soldado s : soldadosEj1) {
+      System.out.println(s);
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Soldados Ejército 2:");
+    for (Soldado s : soldadosEj2) {
+      System.out.println(s);
+    }
+
+    // Ranking de poder
+    ArrayList<Soldado> soldadosEj1Sorted = new ArrayList<>(soldadosEj1);
+    ArrayList<Soldado> soldadosEj2Sorted = new ArrayList<>(soldadosEj2);
+
+    // Ordenamiento por selección
+    for (int i = 0; i < soldadosEj1Sorted.size(); i++) {
+      int maxIndex = i;
+      for (int j = i + 1; j < soldadosEj1Sorted.size(); j++) {
+        if (soldadosEj1Sorted.get(j).getHp() > soldadosEj1Sorted.get(maxIndex).getHp()) {
+          maxIndex = j;
+        }
+      }
+      Soldado temp = soldadosEj1Sorted.get(maxIndex);
+      soldadosEj1Sorted.set(maxIndex, soldadosEj1Sorted.get(i));
+      soldadosEj1Sorted.set(i, temp);
+    }
+
+    for (int i = 0; i < soldadosEj2Sorted.size(); i++) {
+      int maxIndex = i;
+      for (int j = i + 1; j < soldadosEj2Sorted.size(); j++) {
+        if (soldadosEj2Sorted.get(j).getHp() > soldadosEj2Sorted.get(maxIndex).getHp()) {
+          maxIndex = j;
+        }
+      }
+      Soldado temp = soldadosEj2Sorted.get(maxIndex);
+      soldadosEj2Sorted.set(maxIndex, soldadosEj2Sorted.get(i));
+      soldadosEj2Sorted.set(i, temp);
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Ranking Ejército 1:");
+    for (Soldado s : soldadosEj1Sorted) {
+      System.out.println(s);
+    }
+
+    System.out.println();
+    System.out.println("--------------------------------------------------------");
+    System.out.println();
+    System.out.println("Ranking Ejército 2:");
+    for (Soldado s : soldadosEj2Sorted) {
+      System.out.println(s);
+    }
   }
 
   public static List<Soldado> autoSelectWinner(List<Soldado> Army1, List<Soldado> Army2) {
