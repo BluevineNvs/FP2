@@ -8,9 +8,9 @@ class Methods {
     System.out.println("1: Ejercito 1");
     System.out.println("2: Ejercito 2");
     int imput = sc.nextInt();
-    if(imput == 1){
+    if (imput == 1) {
       todosLosSoldaditos = teamA;
-    }else{
+    } else {
       todosLosSoldaditos = teamB;
     }
     for (Ejercito s : todosLosSoldaditos) {
@@ -192,6 +192,17 @@ class Methods {
 
         if (nuevasCoordenadas.equalsIgnoreCase("pause")) {
           pauseMenu2(tablero);
+          continue;
+        }
+
+        if (coordenadas.equalsIgnoreCase("info")) {
+          List<Soldado> todosLosSoldad = new ArrayList<>();
+          for (Ejercito ejercito : todosLosSoldados) {
+            for (Soldado soldado : ejercito.getSoldados()) {
+              todosLosSoldad.add(soldado);
+            }
+          }
+          info(todosLosSoldad);
           continue;
         }
 
