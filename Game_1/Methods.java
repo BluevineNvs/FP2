@@ -1,6 +1,50 @@
 import java.util.*;
 
 class Methods {
+  public static List<Ejercito>[] territorioeineador(String winner, String kingdom1, String kingdom2,
+      List<Ejercito> teamA, List<Ejercito> teamB, String reino1Name, String reino2Name) {
+    List<Ejercito>[] territorio = new List[2];
+    if (winner.equals("ningun reino")) {
+      System.out.println("El territorio no favorece a ningun reino");
+    }
+    if (winner.equals(kingdom1) && winner.equals(kingdom2)) {
+      System.out.println("El territorio favorece a ambos reinos");
+      for (Ejercito ejercito : teamA) {
+        for (Soldado soldado : ejercito.getSoldados()) {
+          soldado.setHp(soldado.getHp() + 1);
+          soldado.setActHP(soldado.getActHP() + 1);
+        }
+      }
+      for (Ejercito ejercito : teamB) {
+        for (Soldado soldado : ejercito.getSoldados()) {
+          soldado.setHp(soldado.getHp() + 1);
+          soldado.setActHP(soldado.getActHP() + 1);
+        }
+      }
+    }
+    if (kingdom1.equals(winner)) {
+      System.out.println("El territorio favorece a " + reino1Name);
+      for (Ejercito ejercito : teamA) {
+        for (Soldado soldado : ejercito.getSoldados()) {
+          soldado.setHp(soldado.getHp() + 1);
+          soldado.setActHP(soldado.getActHP() + 1);
+        }
+      }
+    }
+    if (kingdom2.equals(winner)) {
+      System.out.println("El territorio favorece a " + reino2Name);
+      for (Ejercito ejercito : teamB) {
+        for (Soldado soldado : ejercito.getSoldados()) {
+          soldado.setHp(soldado.getHp() + 1);
+          soldado.setActHP(soldado.getActHP() + 1);
+        }
+      }
+    }
+    territorio[0] = teamA;
+    territorio[1] = teamB;
+    return territorio;
+  }
+
   public static List<Ejercito> ReinosGameplayCustom(Ejercito[][] tablero, List<Ejercito> teamA, List<Ejercito> teamB) {
     List<Ejercito> todosLosSoldaditos = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
@@ -616,6 +660,7 @@ class Methods {
           while (true) {
             System.out.println("Ingrese las coordenadas del soldado a seleccionar (x, y):");
             System.out.print("x, y: ");
+            sc.nextLine();
             String coordenadas = sc.nextLine();
             String[] partes = coordenadas.split(",");
 

@@ -26,10 +26,31 @@ public class NewGame {
     Methods.llenarTablero(tablero1, reino1, reino2);
     List<Ejercito> a = reino1.getEjercitos();
     List<Ejercito> b = reino2.getEjercitos();
+    String kingdomName = reino1.getName();
+    String kingdomName2 = reino2.getName();
+    String territoryKingdomWinner = Mapa.TerrainBonus(kingdomName, kingdomName2);
+    String terreno1 = Mapa.verifier(kingdomName);
+    String terreno2 = Mapa.verifier(kingdomName2);
+    if (kingdomName.equals("Sacro Imperio")) {
+      terreno1 = Mapa.getException();
+    } else {
+      if (kingdomName2.equals("Sacro Imperio")) {
+        terreno2 = Mapa.getException();
+      }
+    }
+    List<Ejercito>[] armys = Methods.territorioeineador(territoryKingdomWinner, terreno1, terreno2, a, b, kingdomName,
+        kingdomName2);
+    a = armys[0];
+    b = armys[1];
     System.out.println("1: Juego Normal");
     System.out.println("2: Juego Personalizado");
     Scanner sc = new Scanner(System.in);
-    int n = sc.nextInt();
+    int n = 0;
+    try {
+      n = sc.nextInt();
+    } catch (Exception e) {
+      System.out.println("Ingrese una opción valida");
+    }
     switch (n) {
       case 1:
         Methods.ReinosGameplay(tablero1, a);
