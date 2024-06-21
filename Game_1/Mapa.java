@@ -88,5 +88,4 @@ public class Mapa {
       return "ningun reino";
     }
   }
-
 }

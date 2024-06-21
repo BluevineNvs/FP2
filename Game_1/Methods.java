@@ -286,10 +286,16 @@ class Methods {
         tablero[x][y] = null;
         System.out.println(
             "El ejercito " + atacante.getKey() + " gano el combate, ahora ocupa la posicion (" + x1 + ", " + y1 + ")");
+        for (Soldado s : atacante.getSoldados()) {
+          s.setActHP(s.getActHP() + 1);
+        }
       } else {
         tablero[x][y] = null;
         System.out.println("El ejercito " + defensor.getKey()
             + " gano el combate y seguira ocupando la misma posicion (" + x1 + ", " + y1 + ")");
+        for (Soldado s : defensor.getSoldados()) {
+          s.setActHP(s.getActHP() + 1);
+        }
       }
       // Verificar si el juego ha terminado
       int sumaVid1 = Methods.calcularSoldadosVivos(tablero, atacante.getKey());
