@@ -1,5 +1,4 @@
 import java.util.*;
-
 class Methods {
   public static List<Ejercito>[] territorioeineador(String winner, String kingdom1, String kingdom2,
       List<Ejercito> teamA, List<Ejercito> teamB, String reino1Name, String reino2Name) {
