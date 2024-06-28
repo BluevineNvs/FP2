@@ -28,9 +28,8 @@ public class Reino {
   public Reino(String name) {
     this.key = name.substring(0, 1);
     int n = (int) (Math.random() * 9) + 1;
-    int x = (int) (Math.random() * 3) + 1;
     for (int i = 0; i < n; i++) {
-      Ejercito ejercito = new Ejercito(name, key, i, x);
+      Ejercito ejercito = new Ejercito(name, key, i);
       ejercitos.add(ejercito);
     }
   }

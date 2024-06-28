@@ -52,9 +52,9 @@ class Methods {
   public static List<Ejercito> ReinosGameplayCustom(Ejercito[][] tablero, List<Ejercito> teamA, List<Ejercito> teamB) {
     List<Ejercito> todosLosSoldaditos = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
-    System.out.println("Ingrese Ejercito a Modificar: ");
-    System.out.println("1: Ejercito 1");
-    System.out.println("2: Ejercito 2");
+    System.out.println("Ingrese el Reino a Modificar: ");
+    System.out.println("1: Reino 1");
+    System.out.println("2: Reino 2");
     int imput = sc.nextInt();
     if (imput == 1) {
       todosLosSoldaditos = teamA;

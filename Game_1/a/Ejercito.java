@@ -14,10 +14,10 @@ public class Ejercito {
     return key;
   }
 
-  public Ejercito(String name, String key, int z, int x) {
+  public Ejercito(String name, String key, int z) {
     this.name = name;
     this.key = key;
-    this.misSoldados = gen_ejercito(name, x);
+    this.misSoldados = gen_ejercito(name);
     this.z = z + 1;
   }
 
@@ -30,47 +30,41 @@ public class Ejercito {
     return result;
   }
 
-  public List<Soldado> gen_ejercito(String name, int x) {
+  public List<Soldado> gen_ejercito(String name) {
     List<Soldado> soldados = new ArrayList<>();
-    // Inicializar el ejercito
-    switch (x) {
-      case 1:
-        System.out.println("Ejercito de Arqueros");
-        int n = (int) (Math.random() * 9) + 1;
-        for (int i = 0; i < n; i++) {
-          int u = (int) (Math.random() * 10) + 1;
-          Arquero s = new Arquero(u);
+    int n = (int) (Math.random() * 9) + 1;
+    for (int i = 0; i < n; i++) {
+      int tipoSoldado = (int) (Math.random() * 4) + 1;
+      Soldado s;
+      switch (tipoSoldado) {
+        case 1:
+          s = new Arquero((int) (Math.random() * 10) + 1);
           s.setName("Arquero" + "_" + name + " " + i);
           s.setHp((int) (Math.random() * 3) + 1);
           s.setActHP((int) (Math.random() * 3) + 1);
-          soldados.add(s);
-        }
-        break;
-      case 2:
-        System.out.println("Ejercito de Espadachines");
-        int k = (int) (Math.random() * 9) + 1;
-        for (int i = 0; i < k; i++) {
-          int r = (int) (Math.random() * 100) + 1;
-          Espadachin s = new Espadachin(r);
+          break;
+        case 2:
+          s = new Espadachin((int) (Math.random() * 100) + 1);
           s.setName("Espadachin" + "_" + name + " " + i);
           s.setHp((int) (Math.random() * 4) + 1);
           s.setActHP((int) (Math.random() * 4) + 1);
-          soldados.add(s);
-        }
-        break;
-      case 3:
-        System.out.println("Ejercito de Caballeros");
-        int l = (int) (Math.random() * 9) + 1;
-        for (int i = 0; i < l; i++) {
-          int y = (int) (Math.random() * 2) + 1;
-          int t = (int) (Math.random() * 2) + 1;
-          Caballero s = new Caballero(y,t);
+          break;
+        case 3:
+          s = new Caballero((int) (Math.random() * 2) + 1, (int) (Math.random() * 2) + 1);
           s.setName("Caballero" + "_" + name + " " + i);
           s.setHp((int) (Math.random() * 5) + 1);
           s.setActHP((int) (Math.random() * 5) + 1);
-          soldados.add(s);
-        }
-        break;
+          break;
+        case 4:
+          s = new Lancero((int) (Math.random() * 100) + 1);
+          s.setName("Lancero" + "_" + name + " " + i);
+          s.setHp((int) (Math.random() * 5) + 1);
+          s.setActHP((int) (Math.random() * 5) + 1);
+          break;
+        default:
+          throw new IllegalStateException("Tipo de soldado desconocido: " + tipoSoldado);
+      }
+      soldados.add(s);
     }
     return soldados;
   }
