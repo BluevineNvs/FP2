@@ -90,9 +90,9 @@ public class Ahorcado {
         }
 
         if(letrasRestantes == 0){
-            System.out.println("\n¡Ganaste! La palabra secreta es: " + palSecreta);
+            System.out.println("\n¡You Win! La palabra secreta es: " + palSecreta);
         }else{
-            System.out.println("\n¡Perdiste! La palabra secreta era: " + palSecreta);
+            System.out.println("\n¡You lose! La palabra secreta era: " + palSecreta);
         }
     }
 
