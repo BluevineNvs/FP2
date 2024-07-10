@@ -1,13 +1,13 @@
 Para las tablas de la BD
 Nombre de la BD: BaseDeDatos
 CREATE TABLE Users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
 
 CREATE TABLE Articles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     title TEXT NOT NULL,
     content TEXT NOT NULL
 );
