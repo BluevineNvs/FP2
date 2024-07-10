@@ -9,10 +9,10 @@ my $cgi = CGI->new;
 print $cgi->header;
 
 my $id = $cgi->param('id');
-my $dbh = DBI->connect("dbi:SQLite:dbname=db/BaseDeDatos.db", "admin", "admin");
+my $dbh = DBI->connect("DBI:mysql:database=BaseDeDatos;host=localhost", "admin", "admin", {RaiseError => 1, PrintError => 0});
 my $sth = $dbh->prepare("DELETE FROM Articles WHERE id = ?");
 $sth->execute($id);
 
 $dbh->disconnect;
 
-print $cgi->redirect('/cgi-bin/list.pl');
+print $cgi->redirect('../cgi-bin/list.pl');

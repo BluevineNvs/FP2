@@ -9,7 +9,7 @@ my $cgi = CGI->new;
 print $cgi->header;
 
 my $id = $cgi->param('id');
-my $dbh = DBI->connect("dbi:SQLite:dbname=db/BaseDeDatos.db", "admin", "admin");
+my $dbh = DBI->connect("DBI:mysql:database=BaseDeDatos;host=localhost", "admin", "admin", {RaiseError => 1, PrintError => 0});
 my $sth = $dbh->prepare("SELECT title, content FROM Articles WHERE id = ?");
 $sth->execute($id);
 
@@ -18,13 +18,13 @@ if (my @row = $sth->fetchrow_array) {
     print $cgi->start_html($title);
     print $cgi->h1($title);
     print $cgi->p($content);
-    print $cgi->a({-href => '/cgi-bin/list.pl'}, 'Volver al Listado');
+    print $cgi->a({-href => '../cgi-bin/list.pl'}, 'Volver al Listado');
     print $cgi->end_html;
 } else {
     print $cgi->start_html('Error');
     print $cgi->h1('Error');
     print $cgi->p('Página no encontrada.');
-    print $cgi->a({-href => '/cgi-bin/list.pl'}, 'Volver al Listado');
+    print $cgi->a({-href => '../cgi-bin/list.pl'}, 'Volver al Listado');
     print $cgi->end_html;
 }
 

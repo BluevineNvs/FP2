@@ -11,10 +11,10 @@ print $cgi->header;
 my $username = $cgi->param('username');
 my $password = $cgi->param('password');
 
-my $dbh = DBI->connect("dbi:SQLite:dbname=db/BaseDeDatos.db", "admin", "admin");
+my $dbh = DBI->connect("DBI:mysql:database=BaseDeDatos;host=localhost", "admin", "admin", {RaiseError => 1, PrintError => 0});
 my $sth = $dbh->prepare("INSERT INTO Users (username, password) VALUES (?, ?)");
 $sth->execute($username, $password);
 
-print $cgi->redirect('/cgi-bin/login.pl');
+print $cgi->redirect('../cgi-bin/login.pl');
 
 $dbh->disconnect;
