@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WikiSim - Listado de Páginas</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+  <h1>Listado de Páginas</h1>
+  <ul>
+    % for my $page (@pages) {
+    <li><a href="/cgi-bin/view.pl?id=<%= $page->{id} %>">
+        <%= $page->{title} %>
+      </a> <a href="/cgi-bin/edit.pl?id=<%= $page->{id} %>">(E)</a> <a
+        href="/cgi-bin/delete.pl?id=<%= $page->{id} %>">(X)</a></li>
+    % }
+  </ul>
+  <a href="/cgi-bin/new.pl">Agregar Nueva Página</a>
+</body>
+
+</html>
