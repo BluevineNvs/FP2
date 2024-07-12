@@ -1,9 +1,13 @@
 {
     "java.project.sourcePaths": [
         "Game_1",
-        "Lab 06",
         "Lab 05",
+        "Lab 06",
         "Lab 21",
+        "Lab 22"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full\\lib\\javafx-swt.jar",
+        "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full\\lib\\jrt-fs.jar"
+    ]
 }
