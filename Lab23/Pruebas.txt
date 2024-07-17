@@ -1,0 +1,12 @@
+Esta es la primera línea.
+Aquí está la segunda línea.
+La tercera línea está aquí.
+Y esta es la cuarta línea.
+oldWord debería ser reemplazada en esta línea.
+Esta es la última línea con oldWord.
+Este es un texto adicional para probar el conteo de líneas.
+Vamos a añadir algunas líneas más para una prueba completa.
+La palabra oldWord aparece en varias líneas para asegurar que todas sean reemplazadas.
+Probando la lectura y escritura de archivos en Java.
+Esta línea no contiene la palabra clave a reemplazar.
+Al final, todas las líneas deben ser escritas en el archivo de salida.

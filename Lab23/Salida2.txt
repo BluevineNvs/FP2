@@ -1,0 +1,12 @@
+Esta es la primera lineaEstuvoAqui.
+Aquí está la segunda lineaEstuvoAqui.
+La tercera lineaEstuvoAqui está aquí.
+Y esta es la cuarta lineaEstuvoAqui.
+oldWord debería ser reemplazada en esta lineaEstuvoAqui.
+Esta es la última lineaEstuvoAqui con oldWord.
+Este es un texto adicional para probar el conteo de lineaEstuvoAquis.
+Vamos a añadir algunas lineaEstuvoAquis más para una prueba completa.
+La palabra oldWord aparece en varias lineaEstuvoAquis para asegurar que todas sean reemplazadas.
+Probando la lectura y escritura de archivos en Java.
+Esta lineaEstuvoAqui no contiene la palabra clave a reemplazar.
+Al final, todas las lineaEstuvoAquis deben ser escritas en el archivo de salida.

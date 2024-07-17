@@ -4,10 +4,8 @@
         "Lab 05",
         "Lab 06",
         "Lab 21",
-        "Lab 22"
+        "Lab 22",
+        "Lab23"
     ],
-    "java.project.referencedLibraries": [
-        "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full\\lib\\javafx-swt.jar",
-        "c:\\Program Files\\BellSoft\\LibericaJDK-21-Full\\lib\\jrt-fs.jar"
-    ]
+    "java.project.referencedLibraries": []
 }
