@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class EX5 {
   public static void main(String[] args) {
-    String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
+    String jdbcUrl = "jdbc:mariadb://localhost:3306/Library";
     String username = "Nikole";
     String password = "72725439";
 
@@ -16,22 +16,22 @@ public class EX5 {
 
       try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-        preparedStatement.setString(1, "Outhbringer");
+        preparedStatement.setString(1, "Oathbringer");
         preparedStatement.setString(2, "Brandon Sanderson");
         preparedStatement.setInt(3, 2017);
         preparedStatement.executeUpdate();
 
-        preparedStatement.setString(1, "Rythm of War");
+        preparedStatement.setString(1, "Rhythm of War");
         preparedStatement.setString(2, "Brandon Sanderson");
         preparedStatement.setInt(3, 2020);
         preparedStatement.executeUpdate();
 
         connection.commit();
-        System.out.println("Transacción hecha correctamente!");
+        System.out.println("Transacción realizada correctamente!");
       } catch (SQLException e) {
         connection.rollback();
         e.printStackTrace();
-        System.out.println("Nos fuimos para atras porque metiste la pata, revisa que paso Jsjsjs.");
+        System.out.println("Se ha realizado un rollback debido a un error.");
       }
     } catch (SQLException e) {
       e.printStackTrace();
