@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class EX3{
+public class EX3 {
   public static void main(String[] args) {
-    String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
+    String jdbcUrl = "jdbc:mariadb://localhost:3306/Library";
     String username = "Nikole";
     String password = "72725439";
 
@@ -19,8 +19,8 @@ public class EX3{
         String title = resultSet.getString("title");
         String author = resultSet.getString("author");
         int publishedYear = resultSet.getInt("published_year");
-        System.out
-            .println("ID: " + id + ", Title: " + title + ", Author: " + author + ", Año de Publicación: " + publishedYear);
+        System.out.println("ID: " + id + ", Title: " + title + ", Author: " + author + ", Año de Publicación: "
+            + publishedYear);
       }
     } catch (SQLException e) {
       e.printStackTrace();

@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class Creationainador {
     public static void main(String[] args) {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/";
+        String jdbcUrl = "jdbc:mariadb://localhost:3306/";
         String username = "Nikole";
         String password = "72725439";
 
@@ -30,7 +30,7 @@ public class Creationainador {
 
             // Crear la tabla
             statement.executeUpdate(createTableQuery);
-            System.out.println("La Tabla 'Books' ya fue creada, o ya existe.");
+            System.out.println("La Tabla 'Books' fue creada, o ya existe.");
 
         } catch (SQLException e) {
             e.printStackTrace();

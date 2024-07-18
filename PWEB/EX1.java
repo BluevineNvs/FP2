@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class EX1 {
   public static void main(String[] args) {
-    String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
+    String jdbcUrl = "jdbc:mariadb://localhost:3306/";
     String username = "Nikole"; 
     String password = "72725439"; 
 

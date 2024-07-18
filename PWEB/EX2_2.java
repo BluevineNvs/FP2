@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class EX2_2 {
   public static void main(String[] args) {
-    String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
+    String jdbcUrl = "jdbc:mariadb://localhost:3306/Library";
     String username = "Nikole";
     String password = "72725439";
 
@@ -18,7 +18,7 @@ public class EX2_2 {
       preparedStatement.setString(2, "The Way of Kings");
       preparedStatement.executeUpdate();
 
-      System.out.println("Record updated successfully!");
+      System.out.println("Registro actualizado correctamente!");
     } catch (SQLException e) {
       e.printStackTrace();
     }

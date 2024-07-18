@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class EX4 {
   public static void main(String[] args) {
-    String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
+    String jdbcUrl = "jdbc:mariadb://localhost:3306/Library";
     String username = "Nikole";
     String password = "72725439";
 
@@ -17,7 +17,7 @@ public class EX4 {
       preparedStatement.setInt(1, 1);
       preparedStatement.executeUpdate();
 
-      System.out.println("Un Libraso a pasado a Mejor Vida :C!");
+      System.out.println("Libro eliminado exitosamente!");
     } catch (SQLException e) {
       e.printStackTrace();
     }
