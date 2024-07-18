@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public class EX5 {
   public static void main(String[] args) {
     String jdbcUrl = "jdbc:mysql://localhost:3306/Library";
-    String username = "test";
-    String password = "test";
+    String username = "Nikole";
+    String password = "72725439";
 
     String insertQuery = "INSERT INTO Books (title, author, published_year) VALUES (?, ?, ?)";
 
