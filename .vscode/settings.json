@@ -8,5 +8,7 @@
         "Lab23",
         "PWEB"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "c:\\Users\\Nikole\\Downloads\\mariadb-java-client-3.4.0.jar"
+    ]
 }

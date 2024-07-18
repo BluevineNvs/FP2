@@ -1,15 +1,26 @@
 public class Caballero extends Soldado {
   private boolean montado;
   private String arma; // Puede ser "espada" o "lanza"
+  private String ArmyName;
+
+  public String getArmyName() {
+    return ArmyName;
+  }
+
+  public void setArmyName(String armyName) {
+    this.ArmyName = armyName;
+  }
 
   public Caballero() {
     super();
     this.montado = true; // valor por defecto
     this.arma = "lanza esquirlada"; // valor por defecto
+    this.setType("Caballero");
   }
 
   public Caballero(int a, int b) {
     super();
+    this.setType("Caballero");
     switch (a) {
       case 1:
         this.montado = true;
@@ -32,6 +43,7 @@ public class Caballero extends Soldado {
     super(name, atkLvl, defLvl, hp, speed, team);
     this.montado = montado;
     this.arma = arma;
+    this.setType("Caballero");
   }
 
   public boolean isMontado() {

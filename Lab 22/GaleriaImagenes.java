@@ -64,33 +64,28 @@ public class GaleriaImagenes extends Application {
       mostrarImagenActual();
     }
   }
-
   private void mostrarImagenAnterior() {
     if (!imagenes.isEmpty()) {
       indiceActual = (indiceActual > 0) ? indiceActual - 1 : imagenes.size() - 1;
       mostrarImagenActual();
     }
   }
-
   private void mostrarImagenSiguiente() {
     if (!imagenes.isEmpty()) {
       indiceActual = (indiceActual < imagenes.size() - 1) ? indiceActual + 1 : 0;
       mostrarImagenActual();
     }
   }
-
   private void mostrarImagenActual() {
     if (!imagenes.isEmpty()) {
       vistaImagen.setImage(imagenes.get(indiceActual));
     }
   }
-
   private void estilizarBoton(Button btn) {
     btn.setStyle("-fx-background-color: #fab4e6; -fx-text-fill: white; -fx-font-size: 14px;");
     btn.setPrefWidth(120);
     btn.setPrefHeight(30);
   }
-
   public static void main(String[] args) {
     launch(args);
   }

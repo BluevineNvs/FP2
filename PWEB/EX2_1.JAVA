@@ -11,8 +11,8 @@ public class EX2_1 {
 
     String insertQuery = "INSERT INTO Books (title, author, published_year) VALUES (?, ?, ?)";
     try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-    PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-      
+        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
       preparedStatement.setString(1, "The Way of Kings");
       preparedStatement.setString(2, "Brandon Sanderson");
       preparedStatement.setInt(3, 2001);

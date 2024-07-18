@@ -1,5 +1,14 @@
 public class Lancero extends Soldado {
   private int longitudDeLanza;
+  private String ArmyName;
+
+  public String getArmyName() {
+    return ArmyName;
+  }
+
+  public void setArmyName(String armyName) {
+    this.ArmyName = armyName;
+  }
 
 
   public int getLongitudDeLanza() {
@@ -13,11 +22,13 @@ public class Lancero extends Soldado {
   public Lancero() {
     super();
     this.longitudDeLanza = 100; 
+    this.setType("Lancero");
   }
 
   public Lancero(int x) {
     super();
     this.longitudDeLanza = x;
+    this.setType("Lancero");
   }
 
   public void Schiltrom(){

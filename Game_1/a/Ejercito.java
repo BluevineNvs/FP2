@@ -40,26 +40,38 @@ public class Ejercito {
         case 1:
           s = new Arquero((int) (Math.random() * 10) + 1);
           s.setName("Arquero" + "_" + name + " " + i);
-          s.setHp((int) (Math.random() * 3) + 1);
-          s.setActHP((int) (Math.random() * 3) + 1);
+          s.setArmyName(name);
+          s.setAtkLvl(7);
+          s.setDefLvl(3);
+          s.setHp((int) (Math.random() * 5) + 1);
+          s.setActHP(s.getHp());
           break;
         case 2:
           s = new Espadachin((int) (Math.random() * 100) + 1);
           s.setName("Espadachin" + "_" + name + " " + i);
-          s.setHp((int) (Math.random() * 4) + 1);
-          s.setActHP((int) (Math.random() * 4) + 1);
+          s.setArmyName(name);
+          s.setAtkLvl(10);
+          s.setDefLvl(8);
+          s.setHp((int) (Math.random() * 10) + 1);
+          s.setActHP(s.getHp());
           break;
         case 3:
           s = new Caballero((int) (Math.random() * 2) + 1, (int) (Math.random() * 2) + 1);
           s.setName("Caballero" + "_" + name + " " + i);
-          s.setHp((int) (Math.random() * 5) + 1);
-          s.setActHP((int) (Math.random() * 5) + 1);
+          s.setAtkLvl(13);
+          s.setArmyName(name);
+          s.setDefLvl(7);
+          s.setHp((int) (Math.random() * 12) + 1);
+          s.setActHP(s.getHp());
           break;
         case 4:
           s = new Lancero((int) (Math.random() * 100) + 1);
           s.setName("Lancero" + "_" + name + " " + i);
-          s.setHp((int) (Math.random() * 5) + 1);
-          s.setActHP((int) (Math.random() * 5) + 1);
+          s.setAtkLvl(5);
+          s.setArmyName(name);
+          s.setDefLvl(10);
+          s.setHp((int) (Math.random() * 8) + 1);
+          s.setActHP(s.getHp());
           break;
         default:
           throw new IllegalStateException("Tipo de soldado desconocido: " + tipoSoldado);

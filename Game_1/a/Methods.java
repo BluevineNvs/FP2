@@ -262,8 +262,6 @@ class Methods {
         x1 = Integer.parseInt(partes[0]);
         y1 = Integer.parseInt(partes[1]);
 
-        System.out.println("AL ATAQUE!!!...");
-
         if (x >= 0 && x < 10 && y >= 0 && y < 10 && x1 >= 0 && x1 < 10 && y1 >= 0 && y1 < 10) {
           if (tablero[x][y] != null) {
             break;
@@ -276,9 +274,18 @@ class Methods {
           crearTableroReinos(tablero, Reino1);
         }
       }
-
+      System.out.println("AL ATAQUE!!!...");
       Ejercito atacante = tablero[x][y];
       Ejercito defensor = tablero[x1][y1];
+
+      if (defensor == null) {
+        System.out.println("Esta ubicación está limpia, tu Ejercito se mueve a ella");
+        tablero[x1][y1] = atacante;
+        tablero[x][y] = null;
+        System.out.println();
+        crearTableroReinos(tablero, Reino1);
+        continue;
+      }
 
       if (atacante.getKey() == defensor.getKey()) {
         System.out.println("No puedes atacar a un aliado. Intente de nuevo.");
@@ -301,22 +308,127 @@ class Methods {
           s.setActHP(s.getActHP() + 1);
         }
       }
+      List<Soldado> todosLosSoldadosDeVerdad = new ArrayList<>();
+      for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+          if (tablero[i][j] != null) {
+            List<Soldado> a = tablero[i][j].getSoldados();
+            for (Soldado v : a) {
+              todosLosSoldadosDeVerdad.add(v);
+            }
+          }
+        }
+      }
       // Verificar si el juego ha terminado
       int sumaVid1 = Methods.calcularSoldadosVivos(tablero, atacante.getKey());
       int sumaVid2 = Methods.calcularSoldadosVivos(tablero, defensor.getKey());
       if (sumaVid1 == 0) {
-        Methods.crearTableroReinos(tablero,Reino1);
+        Methods.crearTableroReinos(tablero, Reino1);
         System.out.println("El Reino " + defensor.getName() + " gana la batalla");
+        imprimirResultaditos(tablero, todosLosSoldadosDeVerdad, defensor.getName(), atacante.getName());
         gameOver = true;
       } else if (sumaVid2 == 0) {
-        Methods.crearTableroReinos(tablero,Reino1);
+        Methods.crearTableroReinos(tablero, Reino1);
         System.out.println("El Reino " + atacante.getName() + " gana la batalla");
+        imprimirResultaditos(tablero, todosLosSoldadosDeVerdad, atacante.getName(), defensor.getName());
         gameOver = true;
       }
     }
     System.out.println("El juego a Finalizado. ¡Gracias por jugar!");
     endMenu2();
     sc.close();
+  }
+
+  public static void imprimirResultaditos(Ejercito[][] tablero, List<Soldado> todosLosSoldados, String equipoGanador,
+      String equipoPerdedor) {
+    System.out.println("Resultado Final:");
+    System.out.println("Equipo Ganador: Ejército " + equipoGanador);
+    System.out.println(equipoGanador + equipoPerdedor);
+    int Ejercitos1 = 0;
+    int Ejercitos2 = 0;
+    int arqueros1 = 0;
+    int arqueros2 = 0;
+    int caballeros1 = 0;
+    int caballeros2 = 0;
+    int espadachines1 = 0;
+    int espadachines2 = 0;
+    int lanceros1 = 0;
+    int lanceros2 = 0;
+
+    for (Ejercito[] fila : tablero) {
+      for (Ejercito s : fila) {
+        if (s != null && s.getName().equals(equipoGanador)) {
+          System.out.println(s.getName());
+          Ejercitos1++;
+        } else {
+          if (s != null && s.getName().equals(equipoGanador)) {
+            System.out.println(s.getName());
+            Ejercitos2++;
+          }
+        }
+      }
+    }
+
+    for (Soldado s : todosLosSoldados) {
+      if (s != null && s.getArmyName().equals(equipoGanador)) {
+        String type = s.getType();
+        switch (type) {
+          case "Arquero":
+            arqueros1 += 1;
+            break;
+          case "Caballero":
+            caballeros1 += 1;
+            break;
+          case "Espadachin":
+            espadachines1 += 1;
+            break;
+          case "Lancero":
+            lanceros1 += 1;
+            break;
+        }
+      } else if (s != null && s.getArmyName().equals(equipoPerdedor)) {
+        String type = s.getType();
+        switch (type) {
+          case "Arquero":
+            arqueros2 += 1;
+            break;
+          case "Caballero":
+            caballeros2 += 1;
+            break;
+          case "Espadachin":
+            espadachines2 += 1;
+            break;
+          case "Lancero":
+            lanceros2 += 1;
+            break;
+        }
+      }
+    }
+
+    int Soldados_totales_Restantes1 = arqueros1 + caballeros1 + espadachines1 + lanceros1;
+    int Soldados_totales_Restantes2 = arqueros2 + caballeros2 + espadachines2 + lanceros2;
+
+    System.out.println("Ejército 1: " + equipoGanador);
+    System.out.println("Cantidad total de Ejércitos: " + Ejercitos1 + " y cantidad total de soldados: "
+        + Soldados_totales_Restantes1);
+    System.out.println("Espadachines: " + espadachines1);
+    System.out.println("Arqueros: " + arqueros1);
+    System.out.println("Caballeros: " + caballeros1);
+    System.out.println("Lanceros: " + lanceros1);
+    System.out.println();
+    System.out.println("Ejército 2: " + equipoPerdedor);
+    System.out.println("Cantidad total de Ejércitos: " + Ejercitos2 + " y cantidad total de soldados: "
+        + Soldados_totales_Restantes2);
+    System.out.println("Espadachines: " + espadachines2);
+    System.out.println("Arqueros: " + arqueros2);
+    System.out.println("Caballeros: " + caballeros2);
+    System.out.println("Lanceros: " + lanceros2);
+    System.out.println();
+    System.out.println("Estadísticas completas de los soldados finales:");
+
+    for (Soldado s : todosLosSoldados) {
+      System.out.println(s);
+    }
   }
 
   public void miniLogic(Soldado[][] tablero, List<Soldado> todosLosSoldados) {
@@ -1081,7 +1193,7 @@ class Methods {
         if (tablero[i][j] == null) {
           System.out.print("|_|");
         } else {
-          if(tablero[i][j].getName().equals(Reino1)){
+          if (tablero[i][j].getName().equals(Reino1)) {
             System.out.print("|" + ANSI_RED + tablero[i][j].getKey() + ANSI_RESET + "|");
           } else {
             System.out.print("|" + ANSI_BLUE + tablero[i][j].getKey() + ANSI_RESET + "|");

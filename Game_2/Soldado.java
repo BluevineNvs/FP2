@@ -10,24 +10,6 @@ class Soldado {
   private int fila;
   private int columna;
   private int team;
-  private String type;
-  private String ArmyName;
-
-  public String getArmyName() {
-    return ArmyName;
-  }
-
-  public void setArmyName(String armyName) {
-    this.ArmyName = armyName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
 
   public int getFila() {
     return fila;
@@ -51,10 +33,6 @@ class Soldado {
 
   public void setTeam(int team) {
     this.team = team;
-  }
-
-  public String getInitial(){
-    return this.name.substring(0, 1);
   }
 
   @Override
