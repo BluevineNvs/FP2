@@ -1,12 +1,15 @@
 {
     "java.project.sourcePaths": [
-        "Game_1",
-        "Lab 05",
-        "Lab 06",
-        "Lab 21",
-        "Lab 22",
+        "PWEB",
         "Lab23",
-        "PWEB"
+        "Lab 22",
+        "Lab 21",
+        "Lab 06",
+        "Lab 05",
+        "Game_1",
+        "Aedo01",
+        "Aedo02",
+        ""
     ],
     "java.project.referencedLibraries": [
         "c:\\Users\\Nikole\\Downloads\\mariadb-java-client-3.4.0.jar"
