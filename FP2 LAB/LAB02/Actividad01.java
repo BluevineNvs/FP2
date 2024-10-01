@@ -63,7 +63,7 @@ public class Actividad01 {
         int contador = 0;
         String letra;
         String[] palabras = { "programacion", "java", "indentacion", "clases",
-                "objetos", "desarrollador", "pruebas", "test", "pruebita", "uwu" };
+                "objetos", "desarrollador", "pruebas", "test" };
         String palSecreta = getPalabraSecreta(palabras);
         int letrasRestantes = palSecreta.length();
 
@@ -130,9 +130,10 @@ public class Actividad01 {
         System.out.println("Ingrese letra: ");
         laLetra = sc.next().toLowerCase();
         while (laLetra.length() != 1 || checker(laLetra)){
-            System.out.println("Ingrese una sola letra: ");
+            System.out.println("Error. No cumple las condiciones. Ingrese nuevamente: ");
             laLetra = sc.next().toLowerCase();
         }
+        sc.close();
         return laLetra;
     }
 

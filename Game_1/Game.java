@@ -26,7 +26,7 @@ class Game {
         System.out.println("¡Preparados para la acción inmediata!");
         System.out.println("En este modo, el destino será decidido en una batalla rápida y frenética");
         System.out.println("¡No hay tiempo que perder!");
-        Batalla batalla = new Batalla(null);
+        new Batalla(null);
         break;
       case 2:
         System.out.println("¡Juego Personalizado!");
@@ -44,5 +44,6 @@ class Game {
         System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
         break;
     }
+    sc.close();
   }
 }

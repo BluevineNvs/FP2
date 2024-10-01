@@ -1,3 +1,5 @@
+package Game_2;
+
 class Soldado {
   private String name;
   private int atkLvl;

@@ -53,11 +53,11 @@ public class NewGame {
     }
     switch (n) {
       case 1:
-        Methods.ReinosGameplay(tablero1, a);
+        Methods.ReinosGameplay(tablero1, a, terreno2);
         break;
       case 2:
         a = Methods.ReinosGameplayCustom(tablero1, a, b);
-        Methods.ReinosGameplay(tablero1, a);
+        Methods.ReinosGameplay(tablero1, a, terreno2);
         break;
       default:
         System.out.println("Ingrese una opción valida");

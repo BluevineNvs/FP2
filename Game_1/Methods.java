@@ -2,6 +2,7 @@ import java.util.*;
 class Methods {
   public static List<Ejercito>[] territorioeineador(String winner, String kingdom1, String kingdom2,
       List<Ejercito> teamA, List<Ejercito> teamB, String reino1Name, String reino2Name) {
+    @SuppressWarnings("unchecked")
     List<Ejercito>[] territorio = new List[2];
     if (winner.equals("ningun reino")) {
       System.out.println("El territorio no favorece a ningun reino");
@@ -174,6 +175,7 @@ class Methods {
         System.out.println("Opción no valida");
         break;
     }
+    sc.close();
     return todosLosSoldaditos;
   }
 
@@ -783,6 +785,7 @@ class Methods {
             Methods.imprimirResultadoFinal(tablero, todosLosSoldados, 1, batallas, soldadoConMasBajas, bajasPorSoldado);
             return a;
           }
+          sc.close();
         }
       }
     }
@@ -947,15 +950,16 @@ class Methods {
     int z = sc.nextInt();
     switch (z) {
       case 1:
-        Batalla b = new Batalla(null);
+        new Batalla(null);
         break;
       case 2:
-        Game game = new Game();
+        new Game();
         break;
       default:
         System.out.println("Opción inválida");
         break;
     }
+    sc.close();
   }
 
   public static void endMenu2() {
@@ -968,7 +972,7 @@ class Methods {
     int z = sc.nextInt();
     switch (z) {
       case 1:
-        NewGame game = new NewGame();
+        new NewGame();
         break;
       case 2:
         System.out.println("Saliendo del Juego...");
@@ -978,6 +982,7 @@ class Methods {
         System.out.println("Opción inválida");
         break;
     }
+    sc.close();
   }
 
   public static void pauseMenu2(Ejercito[][] tablero) {
@@ -991,7 +996,7 @@ class Methods {
     int z = sc.nextInt();
     switch (z) {
       case 1:
-        NewGame game = new NewGame();
+        new NewGame();
         break;
       case 2:
         System.out.println("Continuando Juego...");
@@ -1005,6 +1010,7 @@ class Methods {
         System.out.println("Opción inválida");
         break;
     }
+    sc.close();
   }
 
   public static void pauseMenu(Soldado[][] tablero) {
@@ -1018,7 +1024,7 @@ class Methods {
     int z = sc.nextInt();
     switch (z) {
       case 1:
-        Batalla b = new Batalla(null);
+        new Batalla(null);
         break;
       case 2:
         Game game = new Game();
@@ -1031,6 +1037,7 @@ class Methods {
         System.out.println("Opción inválida");
         break;
     }
+    sc.close();
   }
 
   public static void llenarTablero(Ejercito[][] tablero, Reino reino, Reino reino2) {

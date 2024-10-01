@@ -1,3 +1,4 @@
+package Game_2;
 import java.util.*;
 
 public class NewGame {

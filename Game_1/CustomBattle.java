@@ -91,7 +91,7 @@ public class CustomBattle {
           jugar();
           return;
         case 5:
-          Game game = new Game();
+          new Game();
           continue;
         default:
           System.out.println("Opción inválida. Intente de nuevo.");
@@ -339,7 +339,7 @@ public class CustomBattle {
   private void jugar() {
     // Lógica del juego
     System.out.println("Iniciando el juego...");
-    Batalla batalla = new Batalla(tablero);
+    new Batalla(tablero);
   }
 
   public static void newSoldier(Soldado[][] tablero, String name, int atk, int def, int hp, int speed, int team,
